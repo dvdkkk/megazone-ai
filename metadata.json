@@ -1,6 +1,6 @@
 {
-  "name": "AI Studio Applet",
-  "description": "An application built with Google AI Studio.",
+  "name": "메가존클라우드 AI-Native 부트캠프",
+  "description": "메가존클라우드 AI-Native 부트캠프 훈련생 모집 페이지",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
