@@ -1,0 +1,58 @@
+@import "tailwindcss";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+
+@theme {
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float-1 {
+  animation: float 4s ease-in-out infinite;
+}
+.animate-float-2 {
+  animation: float 5s ease-in-out infinite 1s;
+}
+.animate-float-3 {
+  animation: float 4.5s ease-in-out infinite 2s;
+}
+.animate-float-4 {
+  animation: float 6s ease-in-out infinite 0.5s;
+}
+.animate-float-5 {
+  animation: float 5.5s ease-in-out infinite 1.5s;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+body {
+  word-break: keep-all;
+  letter-spacing: -0.02em;
+}
