@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { 
   Menu, X, ChevronDown, ChevronRight, Check, PlayCircle, 
   MapPin, Monitor, Coins, Briefcase, Compass, Award, 
-  ArrowRight, Shield, Database, Cloud, Cpu, Building, GraduationCap, Users
+  ArrowRight, Shield, Database, Cloud, Cpu, Building, GraduationCap, Users,
+  Phone, Send
 } from 'lucide-react';
 
 // --- Data ---
@@ -83,9 +84,278 @@ const AccordionItem = ({ question, answer }: { question: string, answer: string,
   );
 };
 
+const ConsultationSection = () => {
+  const [course, setCourse] = useState('AI 에이전트');
+  const [name, setName] = useState('');
+  const [age, setAge] = useState('');
+  const [phone, setPhone] = useState('');
+  const [message, setMessage] = useState('');
+  const [agreePrivacy, setAgreePrivacy] = useState(true);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!agreePrivacy) {
+      alert('개인정보 수집 및 이용에 동의해야 상담 신청이 가능합니다.');
+      return;
+    }
+
+    // 1. Optimistic UI: Immediately show success message! (0.1s response feeling)
+    setIsSubmitted(true);
+
+    // 2. Prepare Form Data according to InputHaven spec & requirement
+    const formData = new FormData();
+    formData.append('_form_id', '914168973e93bda60f4eac1e7cbe1449');
+    formData.append('name', name);
+    formData.append('course', course);
+    formData.append('age', age);
+    formData.append('phone', phone);
+    
+    const fullMessage = `[과정명] ${course}\n[이름] ${name}\n[나이] ${age}\n[연락처] ${phone}\n[문의내용] ${message || '없음'}`;
+    formData.append('message', fullMessage);
+
+    // 3. Background transmission with keepalive: true
+    try {
+      fetch('https://inputhaven.com/api/v1/submit', {
+        method: 'POST',
+        body: formData,
+        keepalive: true,
+      }).catch((err) => {
+        console.error('Background form submission error:', err);
+      });
+    } catch (err) {
+      console.error('Background submission exception:', err);
+    }
+  };
+
+  return (
+    <section id="apply" className="py-20 md:py-24 bg-[#FFCC00] text-slate-900 border-t border-yellow-400">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          
+          {/* Left Column: Heading & Contact Info */}
+          <div className="lg:col-span-6 text-left">
+            <h2 className="text-3xl md:text-5xl font-black text-black leading-tight mb-6 tracking-tight">
+              지금, AI 취업에<br />
+              도전하세요!<br />
+            
+            </h2>
+
+            <p id="apply-menu-target" className="text-base md:text-lg text-slate-900 font-bold mb-10 leading-relaxed scroll-mt-24">
+              국비지원 자격 여부부터 취업 및 교육과정까지<br />
+              <span className="underline underline-offset-4 decoration-2">무료로 상담해드립니다.</span>
+            </p>
+
+            <div className="space-y-6 mb-10">
+              <a href="tel:1877-5280" className="flex items-center gap-4 group">
+                <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center shrink-0 group-hover:bg-slate-800 transition-colors">
+                  <Phone className="w-6 h-6 text-[#FFCC00]" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-800">교육문의</div>
+                  <div className="text-2xl md:text-3xl font-black text-black tracking-tight group-hover:underline">1877-5280</div>
+                </div>
+              </a>
+
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center shrink-0">
+                  <MapPin className="w-6 h-6 text-[#FFCC00]" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-800">교육장소</div>
+                  <div className="text-lg md:text-xl font-extrabold text-black tracking-tight">역삼(강남) / 과천</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-lg md:text-xl font-black text-black">
+              여러분의 꿈을 응원합니다!
+            </div>
+          </div>
+
+          {/* Right Column: Fast Consultation Card Form */}
+          <div id="apply-form" className="lg:col-span-6 scroll-mt-20">
+            <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-2xl border border-yellow-200/80 text-left relative">
+              
+              <div className="flex items-center gap-2 mb-8">
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">빠른 교육상담 신청</h3>
+                <span className="w-3 h-3 rounded-full bg-pink-400 inline-block shrink-0"></span>
+              </div>
+
+              {isSubmitted ? (
+                <div className="text-center py-10 px-2 animate-in fade-in duration-300">
+                  <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Check className="w-8 h-8" />
+                  </div>
+                  <h4 className="text-2xl font-black text-slate-900 mb-2">상담 신청이 완료되었습니다!</h4>
+                  <p className="text-slate-600 font-medium text-sm mb-8 leading-relaxed">
+                    담당 취업 전문가가 확인 후 입력해주신 연락처로<br />
+                    빠르고 친절하게 안내드리겠습니다.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setIsSubmitted(false);
+                      setName('');
+                      setAge('');
+                      setPhone('');
+                      setMessage('');
+                    }}
+                    className="bg-black text-white font-bold px-6 py-3 rounded-xl text-sm hover:bg-slate-800 transition-colors shadow-xs"
+                  >
+                    추가 문의 작성하기
+                  </button>
+                </div>
+              ) : (
+                <form
+                  action="https://inputhaven.com/api/v1/submit"
+                  method="POST"
+                  onSubmit={handleSubmit}
+                  className="space-y-5"
+                >
+                  <input type="hidden" name="_form_id" value="914168973e93bda60f4eac1e7cbe1449" />
+
+                  {/* 이름 & 나이 Row */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                        이름 <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="홍길동"
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-black focus:bg-white transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                        나이 <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="age"
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                        placeholder="예: 30"
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-black focus:bg-white transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  {/* 연락처 */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                      연락처 <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="010-0000-0000"
+                      required
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-black focus:bg-white transition-all"
+                    />
+                  </div>
+
+                  {/* 관심과정 / 과정명 (Exposed / Visible) */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                      과정명 <span className="text-red-500">*</span>
+                    </label>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                      {['AI 에이전트', 'AI 아키텍트', 'AI 보안', 'AI 데이터'].map((c) => (
+                        <label
+                          key={c}
+                          className={`flex items-center justify-center gap-1.5 px-3 py-3 rounded-xl border text-xs font-bold cursor-pointer transition-all ${
+                            course === c
+                              ? 'border-black bg-slate-900 text-white shadow-xs'
+                              : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="course_select"
+                            value={c}
+                            checked={course === c}
+                            onChange={() => setCourse(c)}
+                            className="hidden"
+                          />
+                          <span
+                            className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${
+                              course === c ? 'border-white bg-pink-400' : 'border-slate-400 bg-white'
+                            }`}
+                          ></span>
+                          <span className="whitespace-nowrap">{c}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 문의내용 (Optional / 선택) */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                      문의내용 <span className="text-slate-400 font-normal">(선택)</span>
+                    </label>
+                    <textarea
+                      name="message"
+                      rows={3}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="궁금하신 점을 자유롭게 적어주세요."
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-black focus:bg-white transition-all resize-none"
+                    ></textarea>
+                  </div>
+
+                  {/* 개인정보 동의 */}
+                  <div className="flex items-center justify-between pt-1">
+                    <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-700">
+                      <input
+                        type="checkbox"
+                        checked={agreePrivacy}
+                        onChange={(e) => setAgreePrivacy(e.target.checked)}
+                        className="w-4 h-4 rounded text-black focus:ring-black border-slate-300 accent-black"
+                      />
+                      <span>개인정보 수집 및 이용에 동의합니다.</span>
+                    </label>
+                    <button type="button" className="text-[11px] font-medium text-slate-400 hover:text-slate-600 flex items-center gap-0.5">
+                      자세히보기 <ChevronDown className="w-3 h-3" />
+                    </button>
+                  </div>
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    className="w-full bg-black text-white font-black py-4 rounded-xl shadow-lg hover:bg-slate-800 transition-colors flex items-center justify-center gap-2 text-base md:text-lg tracking-wide mt-3"
+                  >
+                    <span>무료상담 신청하기</span>
+                    <Send className="w-4 h-4 text-white" />
+                  </button>
+
+                  <p className="text-[11px] text-center text-slate-400 font-medium">
+                    개인정보는 상담 목적으로만 사용되며 안전하게 보호됩니다.
+                  </p>
+                </form>
+              )}
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTrack, setActiveTrack] = useState('agent');
+  const [certTab, setCertTab] = useState<'AWS' | 'MS' | 'GCP' | 'ISV'>('AWS');
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden">
@@ -144,11 +414,11 @@ export default function App() {
                 </a>
               ))}
               <a 
-                href="#apply" 
+                href="#apply-menu-target" 
                 onClick={() => setIsMenuOpen(false)}
                 className="block w-full text-center mt-4 bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold"
               >
-                교육 신청하기
+                교육상담신청하기
               </a>
             </div>
           </div>
@@ -952,7 +1222,7 @@ export default function App() {
         </section>
 
         {/* --- Partners --- */}
-        <section className="py-24 bg-gray-50 border-y border-gray-200">
+        <section className="py-16 bg-gray-50 border-y border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Partners</span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">글로벌 파트너 생태계 안에서 배웁니다</h2>
@@ -974,31 +1244,610 @@ export default function App() {
               ))}
             </div>
 
-            {/* Placeholder for Partner Logos - styling as text blocks for this context */}
-            <div className="space-y-16">
+            {/* Partner Logos - Styled as provided in image */}
+            <div className="space-y-12">
               <div>
-                <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">CSP Partners</h3>
-                <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-                  <span className="text-2xl font-black text-gray-800">AWS</span>
-                  <span className="text-2xl font-black text-gray-800">Google Cloud</span>
-                  <span className="text-2xl font-black text-gray-800">Microsoft Azure</span>
-                  <span className="text-2xl font-black text-gray-800">Oracle</span>
+                {/* Header Badge & Subtitle */}
+                <div className="flex items-center gap-3 mb-6 text-left">
+                  <span className="bg-[#121A2D] text-white text-xs font-black px-3.5 py-1.5 rounded-full tracking-wider uppercase shadow-xs">
+                    CSP PARTNERS
+                  </span>
+                  <span className="text-sm md:text-base font-semibold text-slate-500">
+                    글로벌 클라우드 리더들과의 전략적 협업
+                  </span>
+                </div>
+
+                {/* 5 Cards Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                  {/* Card 1: AWS Training Partner */}
+                  <div className="bg-white rounded-2xl border border-slate-200 p-5 h-28 flex items-center justify-center shadow-xs hover:shadow-md transition-all">
+                    <div className="flex flex-col items-center justify-center">
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <div className="relative flex flex-col items-center">
+                          <span className="text-2xl font-black text-slate-800 tracking-tighter leading-none font-sans">aws</span>
+                          <svg className="w-9 h-2.5 text-[#FF9900]" viewBox="0 0 50 15" fill="currentColor">
+                            <path d="M 4 2 Q 25 14 46 2 L 44 0 Q 25 11 6 0 Z M 42 2 L 48 2 L 45 7 Z" />
+                          </svg>
+                        </div>
+                        <div className="text-[10px] font-medium text-slate-600 leading-tight border-l border-slate-300 pl-2 text-left">
+                          <div>partner</div>
+                          <div>network</div>
+                        </div>
+                      </div>
+                      <div className="text-xs font-semibold text-slate-500 tracking-tight">Training Partner</div>
+                    </div>
+                  </div>
+
+                  {/* Card 2: Google Cloud Partner */}
+                  <div className="bg-white rounded-2xl border border-slate-200 p-5 h-28 flex items-center justify-center shadow-xs hover:shadow-md transition-all">
+                    <div className="flex items-center gap-2.5">
+                      <svg className="w-7 h-7 flex-shrink-0" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" />
+                        <path fill="#EA4335" d="M12 4c1.86 0 3.56.77 4.79 2.01l-1.42 1.42C14.49 6.54 13.3 6 12 6c-2.97 0-5.43 2.16-5.9 5H4.07C4.6 7.42 7.96 4 12 4z" />
+                        <path fill="#FBBC05" d="M6 14c0-.68.12-1.33.33-1.94L4.25 10.5C3.46 11.55 3 12.72 3 14c0 1.66.67 3.16 1.76 4.24l1.42-1.42C5.45 16.09 5 15.1 5 14h1z" />
+                        <path fill="#34A853" d="M12 18c-2.3 0-4.27-1.3-5.24-3.19l-1.74 1.25C6.35 18.25 8.97 20 12 20c3.5 0 6.5-2.12 7.73-5.18l-1.87-.62C16.88 16.48 14.6 18 12 18z" />
+                      </svg>
+                      <div className="text-left leading-tight">
+                        <div className="text-sm font-bold text-slate-800 tracking-tight">Google Cloud</div>
+                        <div className="text-xs font-semibold text-slate-500">Partner</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Card 3: Microsoft Azure */}
+                  <div className="bg-white rounded-2xl border border-slate-200 p-5 h-28 flex items-center justify-center shadow-xs hover:shadow-md transition-all">
+                    <div className="flex items-center gap-2.5">
+                      <div className="grid grid-cols-2 gap-0.5 w-5 h-5 flex-shrink-0">
+                        <div className="bg-[#F25022] w-2.5 h-2.5"></div>
+                        <div className="bg-[#7FBA00] w-2.5 h-2.5"></div>
+                        <div className="bg-[#00A4EF] w-2.5 h-2.5"></div>
+                        <div className="bg-[#FFB900] w-2.5 h-2.5"></div>
+                      </div>
+                      <span className="text-sm font-bold text-slate-800 tracking-tight">Microsoft Azure</span>
+                    </div>
+                  </div>
+
+                  {/* Card 4: ORACLE Cloud Infrastructure */}
+                  <div className="bg-white rounded-2xl border border-slate-200 p-5 h-28 flex items-center justify-center shadow-xs hover:shadow-md transition-all">
+                    <div className="flex flex-col items-center justify-center">
+                      <div className="text-lg font-black text-[#F80000] tracking-widest leading-none font-serif">ORACLE</div>
+                      <div className="text-[11px] font-semibold text-slate-800 tracking-tight mt-1">Cloud Infrastructure</div>
+                    </div>
+                  </div>
+
+                  {/* Card 5: MEGAZONE K-CLOUD */}
+                  <div className="bg-white rounded-2xl border border-slate-200 p-5 h-28 flex items-center justify-center shadow-xs hover:shadow-md transition-all">
+                    <div className="flex flex-col items-center justify-center">
+                      <div className="text-[10px] font-extrabold text-slate-900 tracking-widest uppercase mb-0.5">MEGAZONE</div>
+                      <div className="text-lg font-black text-slate-900 tracking-tight leading-none">K·CLOUD</div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div>
-                <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Tech & Solution Partners</h3>
-                <div className="flex flex-wrap justify-center gap-x-8 gap-y-6 text-xl font-bold text-gray-400">
-                   <span>NVIDIA</span> <span>Databricks</span> <span>Snowflake</span> <span>Datadog</span>
-                   <span>Elastic</span> <span>Red Hat</span> <span>MongoDB</span> <span>Confluent</span>
+              {/* CERTIFICATIONS Section */}
+              <div className="pt-4">
+                {/* Header Badge & Subtitle */}
+                <div className="flex items-center gap-3 mb-6 text-left">
+                  <span className="bg-[#121A2D] text-white text-xs font-black px-3.5 py-1.5 rounded-full tracking-wider uppercase shadow-xs">
+                    CERTIFICATIONS
+                  </span>
+                  <span className="text-sm md:text-base font-semibold text-slate-500">
+                    글로벌 CSP · 솔루션 기업이 공식 인증한 전문 역량
+                  </span>
+                </div>
+
+                {/* Tab Pill Buttons */}
+                <div className="flex justify-center mb-8">
+                  <div className="bg-slate-100/90 p-1 rounded-full flex items-center gap-1 border border-slate-200/80 shadow-xs">
+                    {(['AWS', 'MS', 'GCP', 'ISV'] as const).map((tab) => (
+                      <button
+                        key={tab}
+                        onClick={() => setCertTab(tab)}
+                        className={`px-5 py-1.5 rounded-full text-xs font-extrabold transition-all cursor-pointer ${
+                          certTab === tab
+                            ? 'bg-white text-slate-900 shadow-sm'
+                            : 'text-slate-500 hover:text-slate-900'
+                        }`}
+                      >
+                        {tab}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Cards Grid */}
+                <div className={`grid grid-cols-2 sm:grid-cols-3 ${(certTab === 'MS' || certTab === 'GCP') ? 'lg:grid-cols-5' : 'lg:grid-cols-6'} gap-4`}>
+                  {certTab === 'AWS' && [
+                    { line1: 'Amazon Redshift', line2: 'Delivery' },
+                    { line1: 'AI Services', line2: 'Competency' },
+                    { line1: 'Managed Service', line2: 'Provider' },
+                    { line1: 'Public Sector', line2: 'Solution Provider' },
+                    { line1: 'Well-Architected', line2: 'Partner Program' },
+                    { line1: 'SAP Services', line2: 'Competency' },
+                  ].map((badge, idx) => (
+                    <div key={idx} className="bg-white rounded-2xl border border-slate-200 p-4 h-40 flex items-center justify-center shadow-xs hover:shadow-md transition-all">
+                      <svg viewBox="0 0 100 115" className="w-22 h-26">
+                        <path 
+                          d="M 5 5 L 75 5 L 95 25 L 95 110 L 5 110 Z" 
+                          fill="none" 
+                          stroke="#232F3E" 
+                          strokeWidth="3.5" 
+                          strokeLinejoin="miter"
+                        />
+                        <text x="50" y="28" textAnchor="middle" fill="#232F3E" fontSize="18" fontWeight="900" fontFamily="sans-serif" letterSpacing="-1">aws</text>
+                        <path d="M 32 32 Q 50 39 68 32" fill="none" stroke="#FF9900" strokeWidth="2.5" strokeLinecap="round" />
+                        <path d="M 65 30 L 70 32 L 67 36 Z" fill="#FF9900" />
+                        <text x="50" y="52" textAnchor="middle" fill="#232F3E" fontSize="9.5" fontWeight="900" fontFamily="sans-serif" letterSpacing="0.8">PARTNER</text>
+                        <text x="50" y="72" textAnchor="middle" fill="#232F3E" fontSize="7.5" fontWeight="700" fontFamily="sans-serif">{badge.line1}</text>
+                        {badge.line2 && <text x="50" y="83" textAnchor="middle" fill="#232F3E" fontSize="7.5" fontWeight="700" fontFamily="sans-serif">{badge.line2}</text>}
+                      </svg>
+                    </div>
+                  ))}
+
+                  {certTab === 'MS' && [
+                    { line1: 'Data & AI', line2: 'Azure' },
+                    { line1: 'Digital & App Innovation', line2: 'Azure' },
+                    { line1: 'Infrastructure', line2: 'Azure' },
+                    { line1: 'Modern Work', line2: '' },
+                    { line1: 'Security', line2: '' },
+                  ].map((cert, idx) => (
+                    <div key={idx} className="bg-white rounded-2xl border border-slate-200/90 p-5 h-40 flex flex-col justify-between shadow-xs hover:shadow-md transition-all text-left">
+                      {/* Microsoft Solutions Partner Logo Header */}
+                      <div className="flex items-center gap-2 mt-1">
+                        <div className="grid grid-cols-2 gap-[1.5px] w-4.5 h-4.5 flex-shrink-0">
+                          <div className="bg-[#F25022] w-full h-full"></div>
+                          <div className="bg-[#7FBA00] w-full h-full"></div>
+                          <div className="bg-[#00A4EF] w-full h-full"></div>
+                          <div className="bg-[#FFB900] w-full h-full"></div>
+                        </div>
+                        <div className="leading-tight text-left">
+                          <div className="text-[13px] font-bold text-[#5E5E5E] tracking-tight font-sans">Microsoft</div>
+                          <div className="text-[10px] font-medium text-[#737373] tracking-tight -mt-0.5">Solutions Partner</div>
+                        </div>
+                      </div>
+
+                      {/* Category Title */}
+                      <div className="text-[13px] font-medium text-[#616161] leading-snug text-left mb-1">
+                        <div>{cert.line1}</div>
+                        {cert.line2 && <div>{cert.line2}</div>}
+                      </div>
+                    </div>
+                  ))}
+
+                  {certTab === 'GCP' && (
+                    <>
+                      {/* Card 1: Google Cloud Partner */}
+                      <div className="bg-white rounded-2xl border border-slate-200/90 p-5 h-40 flex flex-col items-center justify-center text-center shadow-xs hover:shadow-md transition-all">
+                        <div className="flex flex-col items-center justify-center my-auto">
+                          <svg className="w-12 h-12 mb-2" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" />
+                            <path fill="#EA4335" d="M12 4c1.86 0 3.56.77 4.79 2.01l-1.42 1.42C14.49 6.54 13.3 6 12 6c-2.97 0-5.43 2.16-5.9 5H4.07C4.6 7.42 7.96 4 12 4z" />
+                            <path fill="#FBBC05" d="M6 14c0-.68.12-1.33.33-1.94L4.25 10.5C3.46 11.55 3 12.72 3 14c0 1.66.67 3.16 1.76 4.24l1.42-1.42C5.45 16.09 5 15.1 5 14h1z" />
+                            <path fill="#34A853" d="M12 18c-2.3 0-4.27-1.3-5.24-3.19l-1.74 1.25C6.35 18.25 8.97 20 12 20c3.5 0 6.5-2.12 7.73-5.18l-1.87-.62C16.88 16.48 14.6 18 12 18z" />
+                          </svg>
+                          <div className="text-xs font-semibold text-[#757575]">Google Cloud</div>
+                          <div className="text-sm font-bold text-[#424242]">Partner</div>
+                        </div>
+                      </div>
+
+                      {/* Card 2: Infrastructure Specialization */}
+                      <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-40 flex flex-col items-center justify-between text-center shadow-xs hover:shadow-md transition-all">
+                        <div className="flex flex-col items-center pt-1">
+                          <svg className="w-6 h-6 mb-1" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" />
+                            <path fill="#EA4335" d="M12 4c1.86 0 3.56.77 4.79 2.01l-1.42 1.42C14.49 6.54 13.3 6 12 6c-2.97 0-5.43 2.16-5.9 5H4.07C4.6 7.42 7.96 4 12 4z" />
+                            <path fill="#FBBC05" d="M6 14c0-.68.12-1.33.33-1.94L4.25 10.5C3.46 11.55 3 12.72 3 14c0 1.66.67 3.16 1.76 4.24l1.42-1.42C5.45 16.09 5 15.1 5 14h1z" />
+                            <path fill="#34A853" d="M12 18c-2.3 0-4.27-1.3-5.24-3.19l-1.74 1.25C6.35 18.25 8.97 20 12 20c3.5 0 6.5-2.12 7.73-5.18l-1.87-.62C16.88 16.48 14.6 18 12 18z" />
+                          </svg>
+                          <div className="text-[9px] font-bold text-[#80868B] tracking-widest uppercase">SPECIALIZATION</div>
+                          <div className="text-sm font-bold text-[#3C4043] mt-2">Infrastructure</div>
+                        </div>
+                        <div className="text-[11px] font-medium text-[#80868B] pb-1">Google Cloud</div>
+                      </div>
+
+                      {/* Card 3: Work Transformation Enterprise */}
+                      <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-40 flex flex-col items-center justify-between text-center shadow-xs hover:shadow-md transition-all">
+                        <div className="flex flex-col items-center pt-1">
+                          <svg className="w-6 h-6 mb-1" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" />
+                            <path fill="#EA4335" d="M12 4c1.86 0 3.56.77 4.79 2.01l-1.42 1.42C14.49 6.54 13.3 6 12 6c-2.97 0-5.43 2.16-5.9 5H4.07C4.6 7.42 7.96 4 12 4z" />
+                            <path fill="#FBBC05" d="M6 14c0-.68.12-1.33.33-1.94L4.25 10.5C3.46 11.55 3 12.72 3 14c0 1.66.67 3.16 1.76 4.24l1.42-1.42C5.45 16.09 5 15.1 5 14h1z" />
+                            <path fill="#34A853" d="M12 18c-2.3 0-4.27-1.3-5.24-3.19l-1.74 1.25C6.35 18.25 8.97 20 12 20c3.5 0 6.5-2.12 7.73-5.18l-1.87-.62C16.88 16.48 14.6 18 12 18z" />
+                          </svg>
+                          <div className="text-[9px] font-bold text-[#80868B] tracking-widest uppercase">SPECIALIZATION</div>
+                          <div className="text-sm font-bold text-[#3C4043] mt-1.5 leading-tight">
+                            <div>Work Transformation</div>
+                            <div>Enterprise</div>
+                          </div>
+                        </div>
+                        <div className="text-[11px] font-medium text-[#80868B] pb-1">Google Cloud</div>
+                      </div>
+
+                      {/* Card 4: Data Analytics */}
+                      <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-40 flex flex-col items-center justify-between text-center shadow-xs hover:shadow-md transition-all">
+                        <div className="flex flex-col items-center pt-1">
+                          <svg className="w-6 h-6 mb-1" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" />
+                            <path fill="#EA4335" d="M12 4c1.86 0 3.56.77 4.79 2.01l-1.42 1.42C14.49 6.54 13.3 6 12 6c-2.97 0-5.43 2.16-5.9 5H4.07C4.6 7.42 7.96 4 12 4z" />
+                            <path fill="#FBBC05" d="M6 14c0-.68.12-1.33.33-1.94L4.25 10.5C3.46 11.55 3 12.72 3 14c0 1.66.67 3.16 1.76 4.24l1.42-1.42C5.45 16.09 5 15.1 5 14h1z" />
+                            <path fill="#34A853" d="M12 18c-2.3 0-4.27-1.3-5.24-3.19l-1.74 1.25C6.35 18.25 8.97 20 12 20c3.5 0 6.5-2.12 7.73-5.18l-1.87-.62C16.88 16.48 14.6 18 12 18z" />
+                          </svg>
+                          <div className="text-[9px] font-bold text-[#80868B] tracking-widest uppercase">SPECIALIZATION</div>
+                          <div className="text-sm font-bold text-[#3C4043] mt-1.5 leading-tight">
+                            <div>Data</div>
+                            <div>Analytics</div>
+                          </div>
+                        </div>
+                        <div className="text-[11px] font-medium text-[#80868B] pb-1">Google Cloud</div>
+                      </div>
+
+                      {/* Card 5: SELL | SERVICE Premier Partner */}
+                      <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-40 flex flex-col items-center justify-between text-center shadow-xs hover:shadow-md transition-all">
+                        <div className="flex flex-col items-center pt-1">
+                          <svg className="w-6 h-6 mb-1" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" />
+                            <path fill="#EA4335" d="M12 4c1.86 0 3.56.77 4.79 2.01l-1.42 1.42C14.49 6.54 13.3 6 12 6c-2.97 0-5.43 2.16-5.9 5H4.07C4.6 7.42 7.96 4 12 4z" />
+                            <path fill="#FBBC05" d="M6 14c0-.68.12-1.33.33-1.94L4.25 10.5C3.46 11.55 3 12.72 3 14c0 1.66.67 3.16 1.76 4.24l1.42-1.42C5.45 16.09 5 15.1 5 14h1z" />
+                            <path fill="#34A853" d="M12 18c-2.3 0-4.27-1.3-5.24-3.19l-1.74 1.25C6.35 18.25 8.97 20 12 20c3.5 0 6.5-2.12 7.73-5.18l-1.87-.62C16.88 16.48 14.6 18 12 18z" />
+                          </svg>
+                          <div className="text-[9px] font-bold text-[#80868B] tracking-widest uppercase">SELL | SERVICE</div>
+                          <div className="text-sm font-bold text-[#3C4043] mt-1.5 leading-tight">
+                            <div>Premier</div>
+                            <div>Partner</div>
+                          </div>
+                        </div>
+                        <div className="text-[11px] font-medium text-[#80868B] pb-1">Google Cloud</div>
+                      </div>
+                    </>
+                  )}
+
+                  {certTab === 'ISV' && (
+                    <>
+                      {/* Card 1: Akamai Elite Partner */}
+                      <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-40 flex items-center justify-center shadow-xs hover:shadow-md transition-all">
+                        <div className="flex items-center gap-2.5">
+                          <div className="flex items-center gap-1">
+                            <svg className="w-7 h-7" viewBox="0 0 40 40" fill="none">
+                              <path d="M 8 26 C 6 18 12 10 20 8 C 14 12 12 18 14 24 C 15 27 18 29 22 28 C 28 26 32 20 30 12 C 34 18 32 26 26 30 C 20 34 12 32 8 26 Z" fill="#0099DE" />
+                              <path d="M 16 32 C 12 28 12 22 16 18 C 20 14 26 14 28 18 C 24 16 18 18 16 22 C 14 26 16 30 20 32 C 18 33 17 33 16 32 Z" fill="#FF6600" />
+                            </svg>
+                            <span className="text-base font-extrabold text-[#FF6600] tracking-tight font-sans">Akamai</span>
+                          </div>
+                          <span className="text-slate-300 font-light text-base">|</span>
+                          <span className="text-xs font-bold text-[#424242]">Elite Partner</span>
+                        </div>
+                      </div>
+
+                      {/* Card 2: Datadog DPN Premier Tier Partner */}
+                      <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-40 flex items-center justify-center shadow-xs hover:shadow-md transition-all">
+                        <div className="relative w-28 h-28 flex items-center justify-center">
+                          <svg viewBox="0 0 100 115" className="w-full h-full drop-shadow-sm">
+                            <defs>
+                              <linearGradient id="purpleHex" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#6E25B7" />
+                                <stop offset="100%" stopColor="#3C096C" />
+                              </linearGradient>
+                            </defs>
+                            <polygon points="50,3 95,28 95,87 50,112 5,87 5,28" fill="url(#purpleHex)" stroke="#9D4EDD" strokeWidth="2" />
+                            <polygon points="50,8 90,31 90,84 50,107 10,84 10,31" fill="none" stroke="#E0AAFF" strokeWidth="0.8" strokeDasharray="2,2" opacity="0.5" />
+                            {/* Dog Icon */}
+                            <path d="M 46 26 L 54 26 C 56 26 57 28 55 30 L 52 33 L 55 36 C 56 38 54 40 52 38 L 48 38 C 46 40 44 38 45 36 L 48 33 L 45 30 C 43 28 44 26 46 26 Z" fill="#FFFFFF" />
+                            <circle cx="48" cy="29" r="1" fill="#3C096C" />
+                            <text x="50" y="56" textAnchor="middle" fill="#FFFFFF" fontSize="9.5" fontWeight="900" fontFamily="sans-serif" letterSpacing="0.5">DPN</text>
+                            <text x="50" y="69" textAnchor="middle" fill="#FFFFFF" fontSize="7.5" fontWeight="800" fontFamily="sans-serif" letterSpacing="0.2">PREMIER TIER</text>
+                            <text x="50" y="81" textAnchor="middle" fill="#FFFFFF" fontSize="8" fontWeight="800" fontFamily="sans-serif" letterSpacing="0.3">PARTNER</text>
+                          </svg>
+                        </div>
+                      </div>
+
+                      {/* Card 3: Databricks Consulting Partner Elite */}
+                      <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-40 flex items-center justify-center shadow-xs hover:shadow-md transition-all">
+                        <div className="relative w-24 h-28 flex items-center justify-center">
+                          <svg viewBox="0 0 100 120" className="w-full h-full drop-shadow-sm">
+                            <path d="M 10 10 L 90 10 L 90 82 Q 90 115 50 120 Q 10 115 10 82 Z" fill="#1C2833" />
+                            {/* Databricks Icon */}
+                            <g transform="translate(26, 15) scale(0.65)">
+                              <path d="M 10 5 L 35 18 L 60 5 L 35 0 Z M 10 12 L 35 25 L 60 12 L 35 18 Z M 10 19 L 35 32 L 60 19 L 35 25 Z" fill="#FF3621" />
+                              <text x="68" y="22" fill="#FFFFFF" fontSize="16" fontWeight="bold">databricks</text>
+                            </g>
+                            <rect x="18" y="38" width="64" height="32" fill="#FFFFFF" rx="2" />
+                            <text x="50" y="51" textAnchor="middle" fill="#1C2833" fontSize="6.5" fontWeight="900" fontFamily="sans-serif" letterSpacing="0.2">CONSULTING</text>
+                            <text x="50" y="63" textAnchor="middle" fill="#1C2833" fontSize="6.5" fontWeight="900" fontFamily="sans-serif" letterSpacing="0.2">PARTNER</text>
+                            <rect x="22" y="73" width="56" height="15" fill="#FF9900" rx="1" />
+                            <text x="50" y="84" textAnchor="middle" fill="#1C2833" fontSize="8" fontWeight="800" fontFamily="sans-serif">Elite</text>
+                            <circle cx="36" cy="100" r="8" fill="none" stroke="#FF9900" strokeWidth="2.5" strokeDasharray="3,1.5" />
+                            <circle cx="60" cy="100" r="9" fill="none" stroke="#FF9900" strokeWidth="3" strokeDasharray="3.5,1.5" />
+                          </svg>
+                        </div>
+                      </div>
+
+                      {/* Card 4: SAP Gold Partner */}
+                      <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-40 flex items-center justify-center shadow-xs hover:shadow-md transition-all">
+                        <div className="relative w-32 h-20 flex items-center justify-center">
+                          <svg viewBox="0 0 140 80" className="w-full h-full drop-shadow-xs">
+                            <polygon points="10,10 90,10 65,55 10,55" fill="#008FD3" />
+                            <text x="22" y="42" fill="#FFFFFF" fontSize="26" fontWeight="900" fontFamily="sans-serif" letterSpacing="-1">SAP</text>
+                            <polygon points="65,22 130,22 130,70 42,70" fill="#EAAA00" />
+                            <text x="118" y="46" textAnchor="end" fill="#FFFFFF" fontSize="13" fontWeight="900" fontFamily="sans-serif">Gold</text>
+                            <text x="118" y="63" textAnchor="end" fill="#FFFFFF" fontSize="13" fontWeight="900" fontFamily="sans-serif">Partner</text>
+                          </svg>
+                        </div>
+                      </div>
+
+                      {/* Card 5: Snowflake AI Data Cloud Services Partner Elite */}
+                      <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-40 flex items-center justify-center shadow-xs hover:shadow-md transition-all">
+                        <div className="relative w-28 h-28 flex items-center justify-center">
+                          <svg viewBox="0 0 110 110" className="w-full h-full drop-shadow-xs">
+                            <circle cx="55" cy="55" r="50" fill="none" stroke="#FF8C00" strokeWidth="4" />
+                            <circle cx="55" cy="55" r="45" fill="#0099DD" />
+                            {/* Snowflake Logo mark */}
+                            <g transform="translate(43, 16) scale(0.6)">
+                              <path d="M 20 0 L 20 20 M 10 10 L 30 10 M 13 3 L 27 17 M 13 17 L 27 3" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" />
+                            </g>
+                            <text x="55" y="32" textAnchor="middle" fill="#FFFFFF" fontSize="6" fontWeight="800" fontFamily="sans-serif">snowflake</text>
+                            <text x="55" y="43" textAnchor="middle" fill="#FFFFFF" fontSize="5.5" fontWeight="900" fontFamily="sans-serif" letterSpacing="0.1">AI DATA CLOUD</text>
+                            <text x="55" y="51" textAnchor="middle" fill="#FFFFFF" fontSize="4.8" fontWeight="800" fontFamily="sans-serif">SERVICES PARTNER</text>
+                            {/* Cloud + Hand */}
+                            <path d="M 46 63 C 44 59 48 56 52 57 C 54 54 60 55 61 58 C 64 58 65 62 62 64 Z" fill="#FFFFFF" />
+                            <path d="M 43 67 C 48 65 52 67 56 69 C 60 69 63 66 66 65 C 63 70 58 71 52 69 Z" fill="#FFFFFF" />
+                            <text x="55" y="84" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="900" fontFamily="sans-serif" letterSpacing="1">ELITE</text>
+                          </svg>
+                        </div>
+                      </div>
+
+                      {/* Card 6: Cloudflare Powered+ Partner */}
+                      <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-40 flex items-center justify-center shadow-xs hover:shadow-md transition-all">
+                        <div className="flex items-center gap-2.5">
+                          <div className="flex items-center gap-1.5">
+                            <svg className="w-7 h-7" viewBox="0 0 32 32" fill="none">
+                              <path d="M22.5 13.5C21.9 10.1 18.9 7.5 15.3 7.5C12.4 7.5 9.9 9.1 8.6 11.5C5.6 11.8 3.3 14.4 3.3 17.5C3.3 20.8 6 23.5 9.3 23.5H22.3C25.2 23.5 27.5 21.2 27.5 18.3C27.5 15.6 25.4 13.7 22.5 13.5Z" fill="#F38020" />
+                            </svg>
+                            <span className="text-xs font-black text-[#404040] tracking-wider uppercase font-sans">CLOUDFLARE</span>
+                          </div>
+                          <span className="text-slate-300 font-light text-base">|</span>
+                          <div className="text-[11px] font-bold text-[#F38020] leading-none text-left">
+                            <div>Powered+</div>
+                            <div>Partner</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Card 7: GitLab Select Partner */}
+                      <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-40 flex items-center justify-center shadow-xs hover:shadow-md transition-all">
+                        <div className="flex items-center gap-3">
+                          <div className="w-11 h-12 bg-[#171321] rounded-b-xl rounded-t-sm flex items-center justify-center shadow-xs">
+                            <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                              <path d="M8 12h8M12 8v8" strokeLinecap="round" strokeLinejoin="round" />
+                              <circle cx="12" cy="12" r="9" strokeWidth="1.5" />
+                            </svg>
+                          </div>
+                          <span className="text-slate-300 font-light text-lg">|</span>
+                          <div className="flex flex-col text-left">
+                            <div className="flex items-center gap-1 mb-0.5">
+                              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24">
+                                <path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 01-.3-.94l1.22-3.78 2.44-7.51a.42.42 0 01.8 0l2.44 7.51h8.2l2.44-7.51a.42.42 0 01.8 0l2.44 7.51 1.22 3.78a.84.84 0 01-.3.94z" fill="#E24329" />
+                              </svg>
+                              <span className="text-xs font-bold text-[#292929]">GitLab</span>
+                            </div>
+                            <div className="text-sm font-extrabold text-[#171321] leading-tight">Select</div>
+                            <div className="text-sm font-extrabold text-[#171321] leading-tight">Partner</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Card 8: Salesforce Partner */}
+                      <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-40 flex items-center justify-center shadow-xs hover:shadow-md transition-all">
+                        <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#81C8F2] to-[#51A2DA] flex flex-col items-center justify-center p-2 shadow-xs">
+                          {/* Salesforce Cloud */}
+                          <svg className="w-10 h-7 text-white mb-0.5" viewBox="0 0 32 24" fill="currentColor">
+                            <path d="M13.5 4.5 C15 2 18.5 1.5 21 3.5 C23.5 1 27.5 2 29.5 5 C31.5 7.5 31 11.5 29 13 C31 15 30.5 18.5 28 20 C25.5 21.5 22.5 21 21 19.5 C19.5 21.5 16 22 13.5 20 C11.5 22 8 21.5 6 19.5 C3.5 20 1 18 0.5 15 C-0.5 12 1 9 3.5 8 C3 5.5 5 2.5 8 2 C10.5 1.5 12.5 2.5 13.5 4.5 Z" />
+                          </svg>
+                          <span className="text-[10px] font-black text-white tracking-wider uppercase font-sans">PARTNER</span>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
-            </div>
 
-            <div className="mt-16">
-               <a href="#" className="inline-flex items-center gap-2 text-indigo-600 font-semibold hover:text-indigo-800">
-                 메가존클라우드 파트너 생태계 자세히 보기 <ArrowRight className="w-4 h-4" />
-               </a>
+              {/* TECH & SOLUTION PARTNERS Section with Infinite Marquee */}
+              <div className="pt-14 overflow-hidden">
+                {/* Header Badge & Subtitle */}
+                <div className="flex items-center gap-3 mb-8 text-left">
+                  <span className="bg-[#121A2D] text-white text-xs font-black px-3.5 py-1.5 rounded-full tracking-wider uppercase shadow-xs">
+                    TECH & SOLUTION PARTNERS
+                  </span>
+                  <span className="text-sm md:text-base font-semibold text-slate-500">
+                    AI · 데이터 · 인프라 전 영역의 파트너십
+                  </span>
+                </div>
+
+                {/* Infinite Horizontal Marquee Container */}
+                <div className="relative w-full overflow-hidden py-2">
+                  {/* Left & Right Fade Gradients */}
+                  <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-slate-50 to-transparent z-10" />
+                  <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-slate-50 to-transparent z-10" />
+
+                  {/* Marquee Track */}
+                  <div className="animate-marquee flex gap-4">
+                    {/* Double the list for seamless infinite loop */}
+                    {[1, 2].map((loopIdx) => (
+                      <div key={loopIdx} className="flex gap-4 flex-shrink-0">
+                        {/* 1. Red Hat */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="flex items-center gap-2">
+                            <svg className="w-8 h-8 flex-shrink-0" viewBox="0 0 40 32">
+                              <path d="M12 21.5c-3.8 0-8.5-1.5-10.5-3 0 0 3 4 10.5 4s14.5-2.5 15.5-5.5c1-3 0-5.5-3.5-5.5s-6.5.5-9 1c-2.5.5-3.5.5-3-.5s2-2 4.5-2 5.5.5 7.5 1.5c2 1 3.5 2 3.5 4.5 0 4.5-7 5.5-15.5 5.5z" fill="#CC0000"/>
+                              <path d="M26.5 12.5c0 0-2.5-3-8.5-3s-10.5 2.5-10.5 5.5c0 1.5 1 2.5 2.5 3s3.5 0 5-.5c1.5-.5 3.5-.5 3 .5s-1.5 2-4 2-5-.5-6.5-1.5c-1.5-1-2.5-2-2.5-4 0-4 6-6.5 13-6.5s10 2.5 10 5.5c0 1-.5 2-1.5 2.5z" fill="#000000"/>
+                            </svg>
+                            <span className="text-lg font-black text-slate-900 tracking-tight">Red Hat</span>
+                          </div>
+                        </div>
+
+                        {/* 2. ATLASSIAN */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="flex items-center gap-2">
+                            <svg className="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="#0052CC">
+                              <path d="M6.8 12.8L12 3l5.2 9.8c.4.8 1.4 1 2.1.6.8-.4 1-.1.6-.2l-6.8-12.8c-.6-1.1-2.2-1.1-2.8 0L3.5 13.2c-.4.8-.1 1.8.7 2.2.8.4 1.8.1 2.2-.7l.4-.9z" />
+                              <path d="M11 15.5l1 1.9 1-1.9h-2z" opacity="0.6"/>
+                            </svg>
+                            <span className="text-lg font-black text-[#0052CC] tracking-tight">ATLASSIAN</span>
+                          </div>
+                        </div>
+
+                        {/* 3. GitLab */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="flex items-center gap-2">
+                            <svg className="w-7 h-7 flex-shrink-0" viewBox="0 0 24 24">
+                              <path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 01-.3-.94l1.22-3.78 2.44-7.51a.42.42 0 01.8 0l2.44 7.51h8.2l2.44-7.51a.42.42 0 01.8 0l2.44 7.51 1.22 3.78a.84.84 0 01-.3.94z" fill="#E24329" />
+                            </svg>
+                            <span className="text-lg font-black text-slate-900 tracking-tight">GitLab</span>
+                          </div>
+                        </div>
+
+                        {/* 4. MongoDB */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="flex items-center gap-2">
+                            <svg className="w-6 h-7 flex-shrink-0" viewBox="0 0 24 28">
+                              <path d="M12 0C12 0 11.8 3 11.5 5.5C10.5 11.5 6 13.5 6 18.5C6 22.5 8.5 25.5 12 26.5C15.5 25.5 18 22.5 18 18.5C18 13.5 13.5 11.5 12.5 5.5C12.2 3 12 0 12 0Z" fill="#13AA52" />
+                              <path d="M12 0C12 0 12 23.5 12 28C12.5 27.8 13 27.5 13.5 27.2C13 25.5 12.8 21.5 12.8 18.5C12.8 13.5 12.3 11.5 12 0Z" fill="#118D4B" />
+                            </svg>
+                            <span className="text-lg font-extrabold text-[#001E2B] tracking-tight">MongoDB.</span>
+                          </div>
+                        </div>
+
+                        {/* 5. CONFLUENT */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="flex items-center gap-2">
+                            <svg className="w-7 h-7 flex-shrink-0" viewBox="0 0 32 32">
+                              <circle cx="16" cy="16" r="14" fill="none" stroke="#132338" strokeWidth="2" />
+                              <path d="M8 16 L24 16 M16 8 L16 24 M10 10 L22 22 M22 10 L10 22" stroke="#132338" strokeWidth="1.5" />
+                            </svg>
+                            <span className="text-base font-black text-[#132338] tracking-widest uppercase">CONFLUENT</span>
+                          </div>
+                        </div>
+
+                        {/* 6. Fivetran */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="flex items-center gap-2.5">
+                            <svg className="w-6 h-7 flex-shrink-0" viewBox="0 0 24 28">
+                              <path d="M6 0 L16 0 L10 28 L0 28 Z" fill="#0066FF"/>
+                              <path d="M14 0 L24 0 L18 28 L8 28 Z" fill="#0066FF" opacity="0.5"/>
+                            </svg>
+                            <span className="text-xl font-black text-[#0066FF] tracking-tight">Fivetran</span>
+                          </div>
+                        </div>
+
+                        {/* 7. WhaTap */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="flex items-center gap-2">
+                            <div className="flex items-end gap-0.5 h-6">
+                              <div className="w-1.5 h-3 bg-[#FF6B00]"></div>
+                              <div className="w-1.5 h-4.5 bg-[#00B0FF]"></div>
+                              <div className="w-1.5 h-6 bg-[#00E676]"></div>
+                            </div>
+                            <span className="text-xl font-bold text-slate-700 tracking-tight">WhaTap</span>
+                          </div>
+                        </div>
+
+                        {/* 8. NVIDIA */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="flex items-center gap-2">
+                            <svg className="w-8 h-6 flex-shrink-0" viewBox="0 0 36 24">
+                              <rect width="36" height="24" rx="2" fill="#76B900" />
+                              <path d="M8 12 C8 9 12 7 16 7 C20 7 24 9 24 12 C24 15 20 17 16 17" fill="none" stroke="#FFFFFF" strokeWidth="2.5" />
+                            </svg>
+                            <span className="text-xl font-black text-slate-900 tracking-tighter">NVIDIA</span>
+                          </div>
+                        </div>
+
+                        {/* 9. databricks */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="flex items-center gap-2">
+                            <svg className="w-7 h-7 flex-shrink-0" viewBox="0 0 32 32">
+                              <path d="M4 8 L16 14 L28 8 L16 2 Z M4 14 L16 20 L28 14 L16 18 Z M4 20 L16 26 L28 20 L16 24 Z" fill="#FF3621" />
+                            </svg>
+                            <span className="text-xl font-black text-slate-900 tracking-tight">databricks</span>
+                          </div>
+                        </div>
+
+                        {/* 10. DELL */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <span className="text-2xl font-black text-[#0076CE] tracking-tighter">DELL</span>
+                        </div>
+
+                        {/* 11. NUTANIX */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <span className="text-lg font-black text-slate-900 tracking-widest uppercase">NUTANIX</span>
+                        </div>
+
+                        {/* 12. veeam */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="bg-[#00D639] px-3.5 py-1.5 rounded-lg flex items-center justify-center">
+                            <span className="text-lg font-black text-white tracking-tight">veeam</span>
+                          </div>
+                        </div>
+
+                        {/* 13. MariaDB */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="flex items-center gap-2">
+                            <svg className="w-7 h-6 flex-shrink-0" viewBox="0 0 32 24">
+                              <path d="M2 18 C6 14 10 6 16 8 C20 9 22 14 28 10 C26 16 20 20 12 19 Z" fill="#C27D38" />
+                            </svg>
+                            <span className="text-lg font-extrabold text-[#003545]">MariaDB</span>
+                          </div>
+                        </div>
+
+                        {/* 14. Qlik */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="flex items-center gap-1">
+                            <div className="relative flex items-center justify-center w-6 h-6 rounded-full border-2 border-slate-700">
+                              <div className="w-2.5 h-2.5 rounded-full bg-[#009845]"></div>
+                            </div>
+                            <span className="text-xl font-bold text-slate-800">lik</span>
+                          </div>
+                        </div>
+
+                        {/* 15. splunk > a CISCO company */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="flex flex-col items-center">
+                            <div className="text-lg font-black text-slate-900 tracking-tight">splunk &gt;</div>
+                            <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider -mt-0.5">a CISCO company</div>
+                          </div>
+                        </div>
+
+                        {/* 16. ORACLE */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <span className="text-xl font-black text-[#F80000] tracking-widest font-serif">ORACLE</span>
+                        </div>
+
+                        {/* 17. new relic */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="flex items-center gap-2">
+                            <svg className="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+                              <path d="M12 2 L2 7 L2 17 L12 22 L22 17 L22 7 Z" stroke="#00AC69" strokeWidth="2.5" strokeLinejoin="round" />
+                              <path d="M12 2 L12 12 M2 7 L12 12 M22 7 L12 12" stroke="#00AC69" strokeWidth="2" />
+                            </svg>
+                            <span className="text-lg font-extrabold text-[#1D252C]">new relic</span>
+                          </div>
+                        </div>
+
+                        {/* 18. Grafana Labs */}
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-4 h-28 w-56 flex items-center justify-center shadow-xs hover:shadow-md transition-all flex-shrink-0">
+                          <div className="flex items-center gap-2">
+                            <svg className="w-7 h-7 flex-shrink-0" viewBox="0 0 28 28">
+                              <circle cx="14" cy="14" r="10" fill="none" stroke="#F46800" strokeWidth="3" />
+                              <path d="M14 4 C18 8 18 20 14 24" fill="none" stroke="#F46800" strokeWidth="2" />
+                            </svg>
+                            <span className="text-base font-extrabold text-slate-900">Grafana <span className="text-[#F46800]">Labs</span></span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -1214,6 +2063,70 @@ export default function App() {
           </div>
         </section>
 
+        {/* --- Project Review --- */}
+        <section className="py-20 bg-[#F4F8FB] border-t border-slate-200/80">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            {/* Header Pill Badge */}
+            <div className="inline-block bg-indigo-100/80 text-indigo-700 text-xs font-black px-4 py-1.5 rounded-full tracking-wider uppercase mb-4 shadow-xs">
+              PROJECT REVIEW
+            </div>
+
+            {/* Section Title */}
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
+              프로젝트 품평회 현장 스케치
+            </h2>
+
+            {/* Subtitle */}
+            <p className="text-base md:text-lg text-slate-600 font-medium mb-12 max-w-3xl mx-auto">
+              교육의 마지막, 실전 프로젝트의 결과를 발표하고 현업 전문가의 피드백을 받는 품평회 현장입니다.
+            </p>
+
+            {/* Content Grid */}
+            <div className="grid lg:grid-cols-12 gap-8 items-stretch text-left">
+              {/* Left Column: Video */}
+              <div className="lg:col-span-7 bg-black rounded-2xl overflow-hidden shadow-lg border border-slate-200/80 flex items-center justify-center">
+                <video
+                  controls
+                  preload="metadata"
+                  playsInline
+                  className="w-full h-full object-cover rounded-2xl max-h-[460px]"
+                  src="https://training.megazone.com/ai-campus/vid/sketch.mp4"
+                />
+              </div>
+
+              {/* Right Column: 3 Feature Cards */}
+              <div className="lg:col-span-5 flex flex-col justify-between gap-4">
+                {[
+                  {
+                    num: '01',
+                    text: '실전 프로젝트 결과를 직접 발표하는 공식 품평회',
+                  },
+                  {
+                    num: '02',
+                    text: '현업 전문가 · 멘토의 실무 관점 피드백',
+                  },
+                  {
+                    num: '03',
+                    text: '우수 프로젝트는 채용 연계 평가에 반영',
+                  },
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-white rounded-2xl p-6 md:p-8 border border-slate-200/90 shadow-xs hover:shadow-md transition-all flex items-center gap-5 flex-1"
+                  >
+                    <div className="bg-indigo-50 text-indigo-600 font-black text-sm px-3.5 py-2 rounded-xl flex items-center justify-center shrink-0">
+                      {item.num}
+                    </div>
+                    <div className="text-base md:text-lg font-extrabold text-slate-800 leading-snug">
+                      {item.text}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* --- Who --- */}
         <section className="py-24 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -1237,10 +2150,6 @@ export default function App() {
                 </div>
               ))}
             </div>
-
-            <button className="bg-indigo-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200 flex items-center gap-2 mx-auto">
-              🔍 나에게 맞는 트랙 찾기 — AI 커리어 진단 테스트
-            </button>
           </div>
         </section>
 
@@ -1382,6 +2291,9 @@ export default function App() {
           </div>
         </section>
 
+        {/* --- Consultation Application Form (Fast Inquiry) --- */}
+        <ConsultationSection />
+
         {/* --- Footer CTA Banner --- */}
         <section className="bg-indigo-900 py-20 relative overflow-hidden">
            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAzNHYtNGgydjRoMnY0aC0ydjRoLTJ2LTRoLTJ2LTRoMnoiIGZpbGw9IiM0ZjQ2ZTUiIGZpbGwtb3BhY2l0eT0iMC40Ii8+PC9nPjwvc3ZnPg==')] opacity-20"></div>
@@ -1428,7 +2340,7 @@ export default function App() {
                 역삼 캠퍼스 (서울 강남구 논현로85길 46)
               </p>
               <p className="mb-1 font-medium text-gray-900">문의</p>
-              <p className="text-xs font-bold text-indigo-600">02-2109-2545 · mzcedu@megazone.com</p>
+              <a href="tel:1877-5280" className="text-xs font-bold text-indigo-600 hover:underline">1877-5280</a>
             </div>
           </div>
         </div>
@@ -1436,8 +2348,8 @@ export default function App() {
 
       {/* --- Mobile Sticky Bottom CTA --- */}
       <div className="fixed bottom-0 left-0 w-full p-4 bg-white border-t border-gray-200 md:hidden z-50">
-        <a href="#apply" className="block w-full bg-indigo-600 text-white text-center py-4 rounded-xl font-bold shadow-lg">
-          나에게 맞는 트랙 찾기 — 교육 신청하기
+        <a href="#apply-form" className="block w-full bg-indigo-600 text-white text-center py-4 rounded-xl font-bold shadow-lg">
+          교육 상담 신청하기
         </a>
       </div>
 
