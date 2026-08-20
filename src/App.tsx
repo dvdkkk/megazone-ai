@@ -706,12 +706,14 @@ export default function App() {
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center h-12 md:h-14">
-              <img 
-                src="https://postfiles.pstatic.net/MjAyNjA4MTlfMjk1/MDAxNzg3MTIyNzg0OTU3.iQ2WNK36u5q6n_aD5Kqy18b4mVdHUPmkrVnHGmr8iYAg.3q4RGLCB7QM_7tAfB1ckdPT_QMO7gUx8cOof5AoySh0g.PNG/%EB%A9%94%EA%B0%80%EC%A1%B4%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C%EB%A1%9C%EA%B3%A0.png?type=w966"
-                alt="Megazone Cloud Logo"
-                className="h-full w-auto object-contain"
-                referrerPolicy="no-referrer"
-              />
+              <a href="https://megazone-ai.vercel.app" className="h-full block">
+                <img 
+                  src="https://postfiles.pstatic.net/MjAyNjA4MTlfMjk1/MDAxNzg3MTIyNzg0OTU3.iQ2WNK36u5q6n_aD5Kqy18b4mVdHUPmkrVnHGmr8iYAg.3q4RGLCB7QM_7tAfB1ckdPT_QMO7gUx8cOof5AoySh0g.PNG/%EB%A9%94%EA%B0%80%EC%A1%B4%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C%EB%A1%9C%EA%B3%A0.png?type=w966"
+                  alt="Megazone Cloud Logo"
+                  className="h-full w-auto object-contain cursor-pointer"
+                  referrerPolicy="no-referrer"
+                />
+              </a>
             </div>
 
             {/* Desktop Nav */}
