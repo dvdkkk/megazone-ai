@@ -728,7 +728,7 @@ export default function App() {
             {/* Desktop CTA */}
             <div className="hidden md:flex">
               <a href="#apply" className="bg-indigo-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-sm">
-                교육 신청하기
+                교육상담 신청하기
               </a>
             </div>
 
@@ -986,7 +986,7 @@ export default function App() {
                 <button
                   key={track.id}
                   onClick={() => setActiveTrack(track.id)}
-                  className={`text-left p-6 rounded-2xl border-2 transition-all ${
+                  className={`text-left p-6 rounded-2xl border-2 transition-all cursor-pointer ${
                     activeTrack === track.id 
                       ? 'border-indigo-600 bg-indigo-50/30 shadow-md ring-1 ring-indigo-600' 
                       : 'border-gray-100 hover:border-indigo-200 hover:bg-gray-50'
@@ -1118,12 +1118,12 @@ export default function App() {
                   </div>
 
                   <div className="flex gap-4 pt-6 border-t border-gray-100">
-                    <a href="#apply" className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors">
+                    <a href="#apply" className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors cursor-pointer">
                       교육 신청하기
                     </a>
                     <button 
                       onClick={() => { window.location.href = 'https://megazone-ai-01.vercel.app'; }}
-                      className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2"
+                      className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2 cursor-pointer"
                     >
                       과정 상세 보기 <ArrowRight className="w-4 h-4" />
                     </button>
@@ -1249,12 +1249,12 @@ export default function App() {
                   </div>
 
                   <div className="flex gap-4 pt-6 border-t border-gray-100">
-                    <a href="#apply" className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors">
+                    <a href="#apply" className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors cursor-pointer">
                       교육 신청하기
                     </a>
                     <button 
                       onClick={() => { window.location.href = 'https://megazone-ai-02.vercel.app'; }}
-                      className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2"
+                      className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2 cursor-pointer"
                     >
                       과정 상세 보기 <ArrowRight className="w-4 h-4" />
                     </button>
@@ -1380,12 +1380,12 @@ export default function App() {
                   </div>
 
                   <div className="flex gap-4 pt-6 border-t border-gray-100">
-                    <a href="#apply" className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors">
+                    <a href="#apply" className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors cursor-pointer">
                       교육 신청하기
                     </a>
                     <button 
                       onClick={() => { window.location.href = 'https://megazone-ai-03.vercel.app'; }}
-                      className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2"
+                      className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2 cursor-pointer"
                     >
                       과정 상세 보기 <ArrowRight className="w-4 h-4" />
                     </button>
@@ -1511,12 +1511,12 @@ export default function App() {
                   </div>
 
                   <div className="flex gap-4 pt-6 border-t border-gray-100">
-                    <a href="#apply" className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors">
+                    <a href="#apply" className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors cursor-pointer">
                       교육 신청하기
                     </a>
                     <button 
                       onClick={() => { window.location.href = 'https://megazone-ai-04.vercel.app'; }}
-                      className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2"
+                      className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2 cursor-pointer"
                     >
                       과정 상세 보기 <ArrowRight className="w-4 h-4" />
                     </button>
@@ -2762,6 +2762,29 @@ export default function App() {
           교육 상담 신청하기
         </a>
       </div>
+
+      {/* --- PC Floating Round Consultation CTA --- */}
+      <a 
+        href="#apply"
+        onClick={(e) => {
+          e.preventDefault();
+          const el = document.getElementById('apply') || document.getElementById('apply-form');
+          if (el) {
+            const y = el.getBoundingClientRect().top + window.pageYOffset - 80;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        }}
+        className="fixed bottom-8 right-8 z-50 hidden md:flex flex-col items-center justify-center w-20 h-20 bg-indigo-600 text-white rounded-full shadow-2xl hover:bg-indigo-700 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer text-center group border-2 border-white/20"
+      >
+        {/* Animated Ping Ring for emphasis (7s cycle) */}
+        <span className="absolute -inset-1 rounded-full bg-indigo-500 opacity-60 animate-ping-7s pointer-events-none"></span>
+        <span className="absolute inset-0 rounded-full bg-indigo-600 animate-pulse-7s pointer-events-none opacity-40"></span>
+        
+        <Send className="w-5 h-5 mb-0.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200 relative z-10" />
+        <span className="text-[11px] font-bold leading-tight relative z-10">
+          상담신청
+        </span>
+      </a>
 
     </div>
   );
