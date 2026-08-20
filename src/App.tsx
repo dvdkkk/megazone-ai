@@ -44,7 +44,7 @@ const ScrollReveal: React.FC<{ children: React.ReactNode; className?: string; de
 
 // --- Data ---
 const NAV_LINKS = [
-  { name: 'AI 에이전트', href: '#agent' },
+  { name: 'AI 에이전트', href: 'https://megazone-ai-01.vercel.app' },
   { name: 'AI 아키텍트', href: '#architect' },
   { name: 'AI 보안', href: '#security' },
   { name: 'AI 데이터', href: '#data' },
@@ -1119,7 +1119,10 @@ export default function App() {
                     <a href="#apply" className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors">
                       교육 신청하기
                     </a>
-                    <button className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2">
+                    <button 
+                      onClick={() => { window.location.href = 'https://megazone-ai-01.vercel.app'; }}
+                      className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2"
+                    >
                       과정 상세 보기 <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -1247,7 +1250,10 @@ export default function App() {
                     <a href="#apply" className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors">
                       교육 신청하기
                     </a>
-                    <button className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2">
+                    <button 
+                      onClick={() => { window.location.href = 'https://megazone-ai-01.vercel.app'; }}
+                      className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2"
+                    >
                       과정 상세 보기 <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -1375,7 +1381,10 @@ export default function App() {
                     <a href="#apply" className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors">
                       교육 신청하기
                     </a>
-                    <button className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2">
+                    <button 
+                      onClick={() => { window.location.href = 'https://megazone-ai-01.vercel.app'; }}
+                      className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2"
+                    >
                       과정 상세 보기 <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -1503,7 +1512,10 @@ export default function App() {
                     <a href="#apply" className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors">
                       교육 신청하기
                     </a>
-                    <button className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2">
+                    <button 
+                      onClick={() => { window.location.href = 'https://megazone-ai-01.vercel.app'; }}
+                      className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2"
+                    >
                       과정 상세 보기 <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
