@@ -395,8 +395,7 @@ const ConsultationSection = () => {
     formData.append('age', age);
     formData.append('phone', phone);
     
-    const fullMessage = `[과정명] ${course}\n[이름] ${name}\n[나이] ${age}\n[연락처] ${phone}\n[문의내용] ${message || '없음'}`;
-    formData.append('message', fullMessage);
+    formData.append('message', message);
 
     // 3. Background transmission with keepalive: true
     try {
@@ -432,13 +431,21 @@ const ConsultationSection = () => {
             </p>
 
             <div className="space-y-6 mb-10">
-              <a href="tel:1877-5280" className="flex items-center gap-4 group">
+              <a 
+                href="tel:1877-5280" 
+                onClick={(e) => {
+                  if (window.innerWidth >= 768) {
+                    e.preventDefault();
+                  }
+                }}
+                className="flex items-center gap-4 group md:pointer-events-none md:cursor-default"
+              >
                 <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center shrink-0 group-hover:bg-slate-800 transition-colors">
                   <Phone className="w-6 h-6 text-[#FFCC00]" />
                 </div>
                 <div>
                   <div className="text-xs font-bold text-slate-800">교육문의</div>
-                  <div className="text-2xl md:text-3xl font-black text-black tracking-tight group-hover:underline">1877-5280</div>
+                  <div className="text-2xl md:text-3xl font-black text-black tracking-tight group-hover:underline md:group-hover:no-underline">1877-5280</div>
                 </div>
               </a>
 
@@ -2719,7 +2726,17 @@ export default function App() {
                 역삼 캠퍼스 (서울 강남구 논현로85길 46)
               </p>
               <p className="mb-1 font-medium text-gray-900">문의</p>
-              <a href="tel:1877-5280" className="text-xs font-bold text-indigo-600 hover:underline">1877-5280</a>
+              <a 
+                href="tel:1877-5280" 
+                onClick={(e) => {
+                  if (window.innerWidth >= 768) {
+                    e.preventDefault();
+                  }
+                }}
+                className="text-xs font-bold text-indigo-600 hover:underline md:pointer-events-none md:cursor-default md:hover:no-underline md:text-gray-700"
+              >
+                1877-5280
+              </a>
             </div>
           </div>
         </div>
