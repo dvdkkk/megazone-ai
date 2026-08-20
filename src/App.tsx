@@ -388,14 +388,19 @@ const ConsultationSection = () => {
     setIsSubmitted(true);
 
     // 2. Prepare Form Data according to InputHaven spec & requirement
+    const emailSubject = '메가존클라우드 AI-Native 부트캠프 문의';
     const formData = new FormData();
     formData.append('_form_id', '914168973e93bda60f4eac1e7cbe1449');
+    formData.append('_subject', emailSubject);
+    formData.append('subject', emailSubject);
+    formData.append('_title', emailSubject);
+    formData.append('title', emailSubject);
     formData.append('name', name);
     formData.append('course', course);
     formData.append('age', age);
     formData.append('phone', phone);
     
-    const fullMessage = `[과정명] ${course}\n[이름] ${name}\n[나이] ${age}\n[연락처] ${phone}\n[문의내용] ${message || '없음'}`;
+    const fullMessage = `[메일 제목] ${emailSubject}\n[과정명] ${course}\n[이름] ${name}\n[나이] ${age}\n[연락처] ${phone}\n[문의내용] ${message || '없음'}`;
     formData.append('message', fullMessage);
 
     // 3. Background transmission with keepalive: true
@@ -414,8 +419,9 @@ const ConsultationSection = () => {
 
   return (
     <section id="apply" className="py-20 md:py-24 bg-[#FFCC00] text-slate-900 border-t border-yellow-400">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      <ScrollReveal>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
           {/* Left Column: Heading & Contact Info */}
           <div className="lg:col-span-6 text-left">
@@ -497,6 +503,9 @@ const ConsultationSection = () => {
                   className="space-y-5"
                 >
                   <input type="hidden" name="_form_id" value="914168973e93bda60f4eac1e7cbe1449" />
+                  <input type="hidden" name="_subject" value="메가존클라우드 AI-Native 부트캠프 문의" />
+                  <input type="hidden" name="subject" value="메가존클라우드 AI-Native 부트캠프 문의" />
+                  <input type="hidden" name="_title" value="메가존클라우드 AI-Native 부트캠프 문의" />
 
                   {/* 이름 & 나이 Row */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -679,6 +688,7 @@ const ConsultationSection = () => {
 
         </div>
       </div>
+      </ScrollReveal>
     </section>
   );
 };
@@ -751,8 +761,8 @@ export default function App() {
                   const el = document.getElementById('apply-menu-target');
                   if (el) {
                     e.preventDefault();
-                    // Scroll 1 row further down than before
-                    const y = el.getBoundingClientRect().top + window.pageYOffset + 20;
+                    // Scroll 1 row further down than before (~100px offset)
+                    const y = el.getBoundingClientRect().top + window.pageYOffset + 100;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                   }
                 }}
@@ -771,8 +781,9 @@ export default function App() {
           {/* Decorative background elements */}
           <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-bl from-indigo-100/50 to-transparent rounded-bl-full pointer-events-none"></div>
           
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <ScrollReveal>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
               
               {/* Hero Content */}
               <div className="max-w-2xl">
@@ -854,106 +865,112 @@ export default function App() {
 
             </div>
           </div>
+          </ScrollReveal>
         </section>
 
         {/* --- Benefits Bar --- */}
         <section className="relative z-20 -mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
-          <div className="bg-indigo-900 rounded-2xl shadow-xl overflow-hidden">
-             <div className="bg-indigo-800 text-center py-3">
-               <span className="text-indigo-100 font-bold tracking-wider text-sm">수강생 전원 특별 혜택!</span>
-             </div>
-             <div className="grid grid-cols-2 lg:grid-cols-5 divide-x divide-y lg:divide-y-0 divide-indigo-800 bg-white">
-                <div className="p-6 flex flex-col items-center text-center gap-3">
-                  <div className="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center text-2xl">🪙</div>
-                  <p className="font-bold text-gray-900 leading-snug">수강료 0원 +<br/>매월 훈련장려금 지급</p>
-                </div>
-                <div className="p-6 flex flex-col items-center text-center gap-3">
-                  <div className="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center text-2xl">🖥️</div>
-                  <p className="font-bold text-gray-900 leading-snug">최고 사양 인프라<br/>무상 지원</p>
-                </div>
-                {/* Highlighted Component 1 */}
-                <div className="p-6 flex flex-col items-center text-center gap-3 bg-gradient-to-br from-indigo-700 via-purple-700 to-indigo-900 text-white relative overflow-hidden group shadow-lg ring-2 ring-indigo-400/80 transition-all duration-300 hover:scale-[1.03]">
-                  <div className="absolute top-1.5 right-1.5 bg-amber-400 text-indigo-950 font-black text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse shadow-sm">
-                    BEST 혜택
+          <ScrollReveal>
+            <div className="bg-indigo-900 rounded-2xl shadow-xl overflow-hidden">
+               <div className="bg-indigo-800 text-center py-3">
+                 <span className="text-indigo-100 font-bold tracking-wider text-sm">수강생 전원 특별 혜택!</span>
+               </div>
+               <div className="grid grid-cols-2 lg:grid-cols-5 divide-x divide-y lg:divide-y-0 divide-indigo-800 bg-white">
+                  <div className="p-6 flex flex-col items-center text-center gap-3">
+                    <div className="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center text-2xl">🪙</div>
+                    <p className="font-bold text-gray-900 leading-snug">수강료 0원 +<br/>매월 훈련장려금 지급</p>
                   </div>
-                  <div className="w-13 h-13 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-3xl shadow-inner ring-2 ring-amber-300/70 animate-bounce">
-                    🤝
+                  <div className="p-6 flex flex-col items-center text-center gap-3">
+                    <div className="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center text-2xl">🖥️</div>
+                    <p className="font-bold text-gray-900 leading-snug">최고 사양 인프라<br/>무상 지원</p>
                   </div>
-                  <p className="font-black text-white leading-snug text-base tracking-tight drop-shadow-sm">
-                    메가존클라우드<br/><span className="text-amber-300 underline decoration-amber-400 decoration-2 underline-offset-2">인턴십 &amp; 채용 연계</span>
-                  </p>
-                  {/* Shimmer line */}
-                  <div className="absolute -inset-x-full top-0 bottom-0 bg-gradient-to-r from-transparent via-white/25 to-transparent group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></div>
-                </div>
-                <div className="p-6 flex flex-col items-center text-center gap-3">
-                  <div className="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center text-2xl">🧭</div>
-                  <p className="font-bold text-gray-900 leading-snug">현직 전문가의<br/>1:1 밀착 멘토링</p>
-                </div>
-                <div className="p-6 flex flex-col items-center text-center gap-3 col-span-2 lg:col-span-1">
-                  <div className="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center text-2xl">📜</div>
-                  <p className="font-bold text-gray-900 leading-snug">AWS · GCP 공인 자격증<br/>바우처 100% 제공</p>
-                </div>
-             </div>
-          </div>
+                  {/* Highlighted Component 1 */}
+                  <div className="p-6 flex flex-col items-center text-center gap-3 bg-gradient-to-br from-indigo-700 via-purple-700 to-indigo-900 text-white relative overflow-hidden group shadow-lg ring-2 ring-indigo-400/80 transition-all duration-300 hover:scale-[1.03]">
+                    <div className="absolute top-1.5 right-1.5 bg-amber-400 text-indigo-950 font-black text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse shadow-sm">
+                      BEST 혜택
+                    </div>
+                    <div className="w-13 h-13 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-3xl shadow-inner ring-2 ring-amber-300/70 animate-bounce">
+                      🤝
+                    </div>
+                    <p className="font-black text-white leading-snug text-base tracking-tight drop-shadow-sm">
+                      메가존클라우드<br/><span className="text-amber-300 underline decoration-amber-400 decoration-2 underline-offset-2">인턴십 &amp; 채용 연계</span>
+                    </p>
+                    {/* Shimmer line */}
+                    <div className="absolute -inset-x-full top-0 bottom-0 bg-gradient-to-r from-transparent via-white/25 to-transparent group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></div>
+                  </div>
+                  <div className="p-6 flex flex-col items-center text-center gap-3">
+                    <div className="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center text-2xl">🧭</div>
+                    <p className="font-bold text-gray-900 leading-snug">현직 전문가의<br/>1:1 밀착 멘토링</p>
+                  </div>
+                  <div className="p-6 flex flex-col items-center text-center gap-3 col-span-2 lg:col-span-1">
+                    <div className="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center text-2xl">📜</div>
+                    <p className="font-bold text-gray-900 leading-snug">AWS · GCP 공인 자격증<br/>바우처 100% 제공</p>
+                  </div>
+               </div>
+            </div>
+          </ScrollReveal>
         </section>
 
         {/* --- Problem & Why --- */}
         <section className="py-20 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Problem & Why</span>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">왜 지금, AI 엔지니어인가</h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                채용 시장의 기준이 바뀌고 있습니다. 지금 시작하는 사람이 그 기준을 먼저 충족합니다.
-              </p>
+          <ScrollReveal>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-16">
+                <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Problem & Why</span>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">왜 지금, AI 엔지니어인가</h2>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  채용 시장의 기준이 바뀌고 있습니다. 지금 시작하는 사람이 그 기준을 먼저 충족합니다.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-8">
+                {/* Card 1 */}
+                <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow">
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                  <div className="text-indigo-600 text-sm font-bold mb-4 bg-indigo-50 w-fit px-3 py-1 rounded-full">산업 트렌드</div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">전 산업의 AI 전환이 시작됐습니다</h3>
+                  <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+                    기업들이 전 직무에 생성형 AI를 도입하면서, 'AI를 활용하는 인력'을 넘어 'AI 서비스를 만들고 운영하는 인력'에 대한 수요가 빠르게 커지고 있습니다.
+                  </p>
+                  <div className="mt-auto font-semibold text-indigo-700 bg-indigo-50/50 p-3 rounded-lg text-center text-sm">
+                    AI 도입 기업 수 ↑ · AI 직무 채용 공고 ↑
+                  </div>
+                </div>
+
+                {/* Card 2 */}
+                <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow">
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                  <div className="text-blue-600 text-sm font-bold mb-4 bg-blue-50 w-fit px-3 py-1 rounded-full">채용 기준의 변화</div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">IT 채용의 핵심 요구가 달라졌습니다</h3>
+                  <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+                    개발·인프라·보안·데이터 어떤 직무든, LLM 활용 경험과 클라우드 실무 역량이 채용 공고의 우대·필수 조건으로 이동하고 있습니다.
+                  </p>
+                  <div className="mt-auto font-semibold text-blue-700 bg-blue-50/50 p-3 rounded-lg text-center text-sm">
+                    LLM · 클라우드 경험 = 신입의 새 기본기
+                  </div>
+                </div>
+
+                {/* Card 3 */}
+                <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow">
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-purple-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                  <div className="text-purple-600 text-sm font-bold mb-4 bg-purple-50 w-fit px-3 py-1 rounded-full">지금이 적기</div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">기업은 '프로젝트 경험'을 봅니다</h3>
+                  <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+                    이론만 배운 지원자와 현업 연계 프로젝트를 완주한 지원자의 격차는 큽니다. 984시간 실전형 커리큘럼과 300시간+ 프로젝트로 그 격차를 만들어 드립니다.
+                  </p>
+                  <div className="mt-auto font-semibold text-purple-700 bg-purple-50/50 p-3 rounded-lg text-center text-sm">
+                    984시간 실전 커리큘럼 · 300시간+ 프로젝트
+                  </div>
+                </div>
+              </div>
             </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* Card 1 */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                <div className="text-indigo-600 text-sm font-bold mb-4 bg-indigo-50 w-fit px-3 py-1 rounded-full">산업 트렌드</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">전 산업의 AI 전환이 시작됐습니다</h3>
-                <p className="text-gray-600 mb-6 text-sm leading-relaxed">
-                  기업들이 전 직무에 생성형 AI를 도입하면서, 'AI를 활용하는 인력'을 넘어 'AI 서비스를 만들고 운영하는 인력'에 대한 수요가 빠르게 커지고 있습니다.
-                </p>
-                <div className="mt-auto font-semibold text-indigo-700 bg-indigo-50/50 p-3 rounded-lg text-center text-sm">
-                  AI 도입 기업 수 ↑ · AI 직무 채용 공고 ↑
-                </div>
-              </div>
-
-              {/* Card 2 */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                <div className="text-blue-600 text-sm font-bold mb-4 bg-blue-50 w-fit px-3 py-1 rounded-full">채용 기준의 변화</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">IT 채용의 핵심 요구가 달라졌습니다</h3>
-                <p className="text-gray-600 mb-6 text-sm leading-relaxed">
-                  개발·인프라·보안·데이터 어떤 직무든, LLM 활용 경험과 클라우드 실무 역량이 채용 공고의 우대·필수 조건으로 이동하고 있습니다.
-                </p>
-                <div className="mt-auto font-semibold text-blue-700 bg-blue-50/50 p-3 rounded-lg text-center text-sm">
-                  LLM · 클라우드 경험 = 신입의 새 기본기
-                </div>
-              </div>
-
-              {/* Card 3 */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-purple-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                <div className="text-purple-600 text-sm font-bold mb-4 bg-purple-50 w-fit px-3 py-1 rounded-full">지금이 적기</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">기업은 '프로젝트 경험'을 봅니다</h3>
-                <p className="text-gray-600 mb-6 text-sm leading-relaxed">
-                  이론만 배운 지원자와 현업 연계 프로젝트를 완주한 지원자의 격차는 큽니다. 984시간 실전형 커리큘럼과 300시간+ 프로젝트로 그 격차를 만들어 드립니다.
-                </p>
-                <div className="mt-auto font-semibold text-purple-700 bg-purple-50/50 p-3 rounded-lg text-center text-sm">
-                  984시간 실전 커리큘럼 · 300시간+ 프로젝트
-                </div>
-              </div>
-            </div>
-          </div>
+          </ScrollReveal>
         </section>
 
         {/* --- 4 Courses --- */}
         <section id="courses" className="py-24 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">4 Courses</span>
               <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
@@ -1495,85 +1512,91 @@ export default function App() {
               )}
             </div>
           </div>
+          </ScrollReveal>
         </section>
 
         {/* --- Learning Journey --- */}
         <section className="py-24 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Learning Journey</span>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
-                기초부터 취업까지,<br/>현업형 실무 역량을 완성하는 6단계
-              </h2>
-              <p className="text-lg text-gray-600">모든 과정은 공통 AI 기초에서 출발해 현업 연계 프로젝트와 취업 지원으로 이어집니다.</p>
-            </div>
+          <ScrollReveal>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-16">
+                <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Learning Journey</span>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+                  기초부터 취업까지,<br/>현업형 실무 역량을 완성하는 6단계
+                </h2>
+                <p className="text-lg text-gray-600">모든 과정은 공통 AI 기초에서 출발해 현업 연계 프로젝트와 취업 지원으로 이어집니다.</p>
+              </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-              {[
-                { step: 1, title: '공통 AI 기초', desc: 'AI Foundation · Prompt Engineering 등 공통 기초를 다집니다.' },
-                { step: 2, title: '바이브 코딩 & 미니 프로젝트', desc: 'Vibe Coding으로 도구 활용을 익히고 미니 프로젝트를 수행합니다.' },
-                { step: 3, title: '전공 심화 이론·실습', desc: '과정별 핵심 기술을 현업 수준까지 깊게 학습합니다.' },
-                { step: 4, title: '실무 프로젝트', desc: '실제 비즈니스 시나리오로 팀 단위 프로젝트를 진행합니다.' },
-                { step: 5, title: '현업 연계 프로젝트 & 품평회', desc: '기업 주제 종합 프로젝트와 품평회로 우수팀을 선정합니다.' },
-                { step: 6, title: '취업 지원 & 채용 연계', desc: '포트폴리오·면접 대비로 취업까지 연결합니다.' }
-              ].map((item) => (
-                <div key={item.step} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm relative">
-                  <div className="text-indigo-200 font-black text-6xl absolute top-4 right-4 opacity-30 pointer-events-none">0{item.step}</div>
-                  <span className="text-indigo-600 font-bold text-sm mb-2 block relative z-10">STEP {item.step}</span>
-                  <h4 className="text-xl font-bold text-gray-900 mb-2 relative z-10">{item.title}</h4>
-                  <p className="text-gray-600 text-sm relative z-10">{item.desc}</p>
-                </div>
-              ))}
-            </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+                {[
+                  { step: 1, title: '공통 AI 기초', desc: 'AI Foundation · Prompt Engineering 등 공통 기초를 다집니다.' },
+                  { step: 2, title: '바이브 코딩 & 미니 프로젝트', desc: 'Vibe Coding으로 도구 활용을 익히고 미니 프로젝트를 수행합니다.' },
+                  { step: 3, title: '전공 심화 이론·실습', desc: '과정별 핵심 기술을 현업 수준까지 깊게 학습합니다.' },
+                  { step: 4, title: '실무 프로젝트', desc: '실제 비즈니스 시나리오로 팀 단위 프로젝트를 진행합니다.' },
+                  { step: 5, title: '현업 연계 프로젝트 & 품평회', desc: '기업 주제 종합 프로젝트와 품평회로 우수팀을 선정합니다.' },
+                  { step: 6, title: '취업 지원 & 채용 연계', desc: '포트폴리오·면접 대비로 취업까지 연결합니다.' }
+                ].map((item) => (
+                  <div key={item.step} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm relative">
+                    <div className="text-indigo-200 font-black text-6xl absolute top-4 right-4 opacity-30 pointer-events-none">0{item.step}</div>
+                    <span className="text-indigo-600 font-bold text-sm mb-2 block relative z-10">STEP {item.step}</span>
+                    <h4 className="text-xl font-bold text-gray-900 mb-2 relative z-10">{item.title}</h4>
+                    <p className="text-gray-600 text-sm relative z-10">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">입과부터 수료까지, 6개월 학습 로드맵</h3>
-            <div className="flex flex-col md:flex-row rounded-2xl overflow-hidden shadow-lg">
-              {[
-                { month: 'MONTH 1', title: '공통 AI 기초 ·\n바이브 코딩', bg: 'bg-indigo-900 text-white' },
-                { month: 'MONTH 2–3', title: '전공 심화\n이론 · 실습', bg: 'bg-indigo-800 text-indigo-50' },
-                { month: 'MONTH 4', title: '실무 프로젝트\n착수', bg: 'bg-indigo-700 text-indigo-50' },
-                { month: 'MONTH 5', title: '현업 연계 프로젝트\n& 품평회', bg: 'bg-indigo-600 text-white' },
-                { month: 'MONTH 6', title: '수료 · 취업지원\n채용 연계', bg: 'bg-blue-600 text-white' }
-              ].map((item, idx) => (
-                <div key={idx} className={`flex-1 p-6 ${item.bg} flex flex-col justify-between min-h-[160px] border-r border-white/10 last:border-0`}>
-                  <span className="text-xs font-bold tracking-widest opacity-70 mb-4">{item.month}</span>
-                  <h4 className="font-bold text-lg whitespace-pre-line">{item.title}</h4>
-                </div>
-              ))}
+              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">입과부터 수료까지, 6개월 학습 로드맵</h3>
+              <div className="flex flex-col md:flex-row rounded-2xl overflow-hidden shadow-lg">
+                {[
+                  { month: 'MONTH 1', title: '공통 AI 기초 ·\n바이브 코딩', bg: 'bg-indigo-900 text-white' },
+                  { month: 'MONTH 2–3', title: '전공 심화\n이론 · 실습', bg: 'bg-indigo-800 text-indigo-50' },
+                  { month: 'MONTH 4', title: '실무 프로젝트\n착수', bg: 'bg-indigo-700 text-indigo-50' },
+                  { month: 'MONTH 5', title: '현업 연계 프로젝트\n& 품평회', bg: 'bg-indigo-600 text-white' },
+                  { month: 'MONTH 6', title: '수료 · 취업지원\n채용 연계', bg: 'bg-blue-600 text-white' }
+                ].map((item, idx) => (
+                  <div key={idx} className={`flex-1 p-6 ${item.bg} flex flex-col justify-between min-h-[160px] border-r border-white/10 last:border-0`}>
+                    <span className="text-xs font-bold tracking-widest opacity-70 mb-4">{item.month}</span>
+                    <h4 className="font-bold text-lg whitespace-pre-line">{item.title}</h4>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </section>
 
         {/* --- Why Megazone --- */}
         <section className="py-24 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Why Megazone</span>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">메가존클라우드라서 가능한 것</h2>
-              <p className="text-lg text-gray-600">교육기관이 아닌, 국내 1위 클라우드 기업이 직접 설계하고 가르치는 과정입니다.</p>
-            </div>
+          <ScrollReveal>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-16">
+                <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Why Megazone</span>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">메가존클라우드라서 가능한 것</h2>
+                <p className="text-lg text-gray-600">교육기관이 아닌, 국내 1위 클라우드 기업이 직접 설계하고 가르치는 과정입니다.</p>
+              </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { title: '국내 1위', sub: 'MSP 메가존클라우드', desc: '클라우드 관리 서비스 국내 선두 기업이 커리큘럼 설계부터 멘토링까지 직접 참여합니다.' },
-                { title: '20+', sub: '메가존 그룹 자회사', desc: '그룹사·파트너 네트워크와 연계한 TECH BRIDGE 채용 프로그램을 운영합니다.' },
-                { title: '300명+', sub: '연간 신규 채용 규모', desc: '메가존 그룹의 채용 규모와 직결된 인턴십 · 채용 Pool에 우수 수료생을 등록합니다.' },
-                { title: '300시간+', sub: '실무 프로젝트', desc: '전체 984시간 중 300시간 이상을 현업 시나리오 기반 프로젝트에 투입합니다.' },
-              ].map((stat, idx) => (
-                <div key={idx} className="bg-gray-50 rounded-2xl p-8 text-center border border-gray-100 hover:border-indigo-100 hover:shadow-md transition-all">
-                  <h3 className="text-4xl font-black text-indigo-600 mb-2">{stat.title}</h3>
-                  <h4 className="text-lg font-bold text-gray-900 mb-4">{stat.sub}</h4>
-                  <p className="text-gray-600 text-sm leading-relaxed">{stat.desc}</p>
-                </div>
-              ))}
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[
+                  { title: '국내 1위', sub: 'MSP 메가존클라우드', desc: '클라우드 관리 서비스 국내 선두 기업이 커리큘럼 설계부터 멘토링까지 직접 참여합니다.' },
+                  { title: '20+', sub: '메가존 그룹 자회사', desc: '그룹사·파트너 네트워크와 연계한 TECH BRIDGE 채용 프로그램을 운영합니다.' },
+                  { title: '300명+', sub: '연간 신규 채용 규모', desc: '메가존 그룹의 채용 규모와 직결된 인턴십 · 채용 Pool에 우수 수료생을 등록합니다.' },
+                  { title: '300시간+', sub: '실무 프로젝트', desc: '전체 984시간 중 300시간 이상을 현업 시나리오 기반 프로젝트에 투입합니다.' },
+                ].map((stat, idx) => (
+                  <div key={idx} className="bg-gray-50 rounded-2xl p-8 text-center border border-gray-100 hover:border-indigo-100 hover:shadow-md transition-all">
+                    <h3 className="text-4xl font-black text-indigo-600 mb-2">{stat.title}</h3>
+                    <h4 className="text-lg font-bold text-gray-900 mb-4">{stat.sub}</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">{stat.desc}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-center text-xs text-gray-400 mt-8">수강생 수 · 취업률 · 만족도 등 성과 수치는 1기 운영 후 실측 데이터로 업데이트됩니다.</p>
             </div>
-            <p className="text-center text-xs text-gray-400 mt-8">수강생 수 · 취업률 · 만족도 등 성과 수치는 1기 운영 후 실측 데이터로 업데이트됩니다.</p>
-          </div>
+          </ScrollReveal>
         </section>
 
         {/* --- Partners --- */}
         <section className="py-16 bg-gray-50 border-y border-gray-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <ScrollReveal>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Partners</span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">글로벌 파트너 생태계 안에서 배웁니다</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-12">
@@ -2200,6 +2223,7 @@ export default function App() {
               </div>
             </div>
           </div>
+          </ScrollReveal>
         </section>
 
         {/* --- Benefit --- */}
@@ -2261,90 +2285,93 @@ export default function App() {
 
         {/* --- Career --- */}
         <section className="py-24 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Career</span>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
-                서류부터 면접까지,<br/>메가존클라우드 취업지원 솔루션
-              </h2>
-              <p className="text-lg text-gray-600">1:1 심층 코칭부터 채용 연계까지, 수료 후 180일 사후 관리로 이어집니다.</p>
-            </div>
+          <ScrollReveal>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-16">
+                <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Career</span>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+                  서류부터 면접까지,<br/>메가존클라우드 취업지원 솔루션
+                </h2>
+                <p className="text-lg text-gray-600">1:1 심층 코칭부터 채용 연계까지, 수료 후 180일 사후 관리로 이어집니다.</p>
+              </div>
 
-            {/* Tech Bridge Program */}
-            <div className="bg-indigo-900 rounded-3xl p-8 md:p-12 mb-16 text-white overflow-hidden relative">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-800 rounded-full blur-3xl opacity-50 -mr-20 -mt-20 pointer-events-none"></div>
-              
-              <div className="relative z-10 flex flex-col lg:flex-row gap-12 items-center">
-                <div className="lg:w-1/3">
-                  <div className="text-cyan-400 font-extrabold text-sm tracking-widest mb-4">MEGAZONE TECH BRIDGE PROGRAM</div>
-                  <h3 className="text-3xl font-extrabold mb-4">
-                    메가존 그룹 20+ 자회사<br/>
-                    <span className="text-cyan-300">연간 300명+ 신규 채용 네트워크</span>
-                  </h3>
-                  <p className="text-indigo-100 mb-6">
-                    교육 성과가 채용으로 이어지도록 설계된 메가존만의 취업 연계 트랙입니다. 인증된 우수 수료생을 메가존 그룹과 파트너사의 채용 포지션에 직접 연결합니다.
-                  </p>
+              {/* Tech Bridge Program */}
+              <div className="bg-indigo-900 rounded-3xl p-8 md:p-12 mb-16 text-white overflow-hidden relative">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-800 rounded-full blur-3xl opacity-50 -mr-20 -mt-20 pointer-events-none"></div>
+                
+                <div className="relative z-10 flex flex-col lg:flex-row gap-12 items-center">
+                  <div className="lg:w-1/3">
+                    <div className="text-cyan-400 font-extrabold text-sm tracking-widest mb-4">MEGAZONE TECH BRIDGE PROGRAM</div>
+                    <h3 className="text-3xl font-extrabold mb-4">
+                      메가존 그룹 20+ 자회사<br/>
+                      <span className="text-cyan-300">연간 300명+ 신규 채용 네트워크</span>
+                    </h3>
+                    <p className="text-indigo-100 mb-6">
+                      교육 성과가 채용으로 이어지도록 설계된 메가존만의 취업 연계 트랙입니다. 인증된 우수 수료생을 메가존 그룹과 파트너사의 채용 포지션에 직접 연결합니다.
+                    </p>
 
-                  {/* Highlighted Component 3 - Royal Sunburst Gold Theme */}
-                  <ScrollReveal delay={150}>
-                    <div className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-400 text-indigo-950 rounded-2xl p-6 border-2 border-yellow-100 shadow-2xl shadow-amber-400/50 relative overflow-hidden group hover:scale-[1.03] transition-all duration-300 cursor-pointer">
-                      {/* Light Beam Animation */}
-                      <div className="absolute -inset-x-full top-0 bottom-0 bg-gradient-to-r from-transparent via-white/50 to-transparent group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></div>
-                      
-                      <div className="font-black text-indigo-950 mb-2 flex items-center gap-2 text-base relative z-10">
-                        <Award className="w-6 h-6 text-indigo-950 animate-bounce" /> 
-                        <span className="text-lg font-black tracking-tight text-indigo-950">우수 수료생 특전</span>
-                        <span className="ml-auto text-[11px] bg-indigo-950 text-amber-300 font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md animate-pulse">
-                          SPECIAL BENEFIT
-                        </span>
+                    {/* Highlighted Component 3 - Royal Sunburst Gold Theme */}
+                    <ScrollReveal delay={150}>
+                      <div className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-400 text-indigo-950 rounded-2xl p-6 border-2 border-yellow-100 shadow-2xl shadow-amber-400/50 relative overflow-hidden group hover:scale-[1.03] transition-all duration-300 cursor-pointer">
+                        {/* Light Beam Animation */}
+                        <div className="absolute -inset-x-full top-0 bottom-0 bg-gradient-to-r from-transparent via-white/50 to-transparent group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></div>
+                        
+                        <div className="font-black text-indigo-950 mb-2 flex items-center gap-2 text-base relative z-10">
+                          <Award className="w-6 h-6 text-indigo-950 animate-bounce" /> 
+                          <span className="text-lg font-black tracking-tight text-indigo-950">우수 수료생 특전</span>
+                          <span className="ml-auto text-[11px] bg-indigo-950 text-amber-300 font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md animate-pulse">
+                            SPECIAL BENEFIT
+                          </span>
+                        </div>
+                        <div className="text-sm text-indigo-950 font-extrabold leading-relaxed relative z-10 bg-white/45 backdrop-blur-xs p-3 rounded-xl border border-amber-600/30 shadow-inner">
+                          서류 전형 면제 · 인턴십 연계 · 그룹사 및 파트너사 채용 기회 우선 제공
+                        </div>
                       </div>
-                      <div className="text-sm text-indigo-950 font-extrabold leading-relaxed relative z-10 bg-white/45 backdrop-blur-xs p-3 rounded-xl border border-amber-600/30 shadow-inner">
-                        서류 전형 면제 · 인턴십 연계 · 그룹사 및 파트너사 채용 기회 우선 제공
-                      </div>
-                    </div>
-                  </ScrollReveal>
-                </div>
+                    </ScrollReveal>
+                  </div>
 
-                <div className="lg:w-2/3 grid sm:grid-cols-2 gap-4">
-                  {[
-                    { step: '1 · 선발', title: '사업부 리더가 면접 직접 참여', desc: '채용 예정 사업부의 리더가 선발 단계부터 직접 훈련생을 평가합니다.' },
-                    { step: '2 · 교육', title: '현직자 멘토 배치 · 최적 팀 매칭', desc: '누적 학습 데이터 기반 개인별 직무 분석으로 최적의 팀과 멘토를 매칭합니다.' },
-                    { step: '3 · 인증', title: 'MTP 인증 등급 부여', desc: '출결·역량 달성률·프로젝트 품평회 결과를 종합해 인증 등급을 산출합니다.' },
-                    { step: '4 · 채용', title: '등급별 채용 연계 혜택', desc: '우수 수료생은 서류 면제·인턴십 등 메가존얼라이언스 채용 전형에 직접 연결됩니다.' },
-                  ].map((item, idx) => (
-                    <div key={idx} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                      <div className="bg-cyan-400 text-indigo-950 font-extrabold px-2.5 py-0.5 rounded text-xs inline-block mb-3 shadow-sm">STEP {item.step}</div>
-                      <h4 className="font-bold text-lg mb-2 text-white">{item.title}</h4>
-                      <p className="text-indigo-100 text-sm leading-relaxed">{item.desc}</p>
-                    </div>
-                  ))}
+                  <div className="lg:w-2/3 grid sm:grid-cols-2 gap-4">
+                    {[
+                      { step: '1 · 선발', title: '사업부 리더가 면접 직접 참여', desc: '채용 예정 사업부의 리더가 선발 단계부터 직접 훈련생을 평가합니다.' },
+                      { step: '2 · 교육', title: '현직자 멘토 배치 · 최적 팀 매칭', desc: '누적 학습 데이터 기반 개인별 직무 분석으로 최적의 팀과 멘토를 매칭합니다.' },
+                      { step: '3 · 인증', title: 'MTP 인증 등급 부여', desc: '출결·역량 달성률·프로젝트 품평회 결과를 종합해 인증 등급을 산출합니다.' },
+                      { step: '4 · 채용', title: '등급별 채용 연계 혜택', desc: '우수 수료생은 서류 면제·인턴십 등 메가존얼라이언스 채용 전형에 직접 연결됩니다.' },
+                    ].map((item, idx) => (
+                      <div key={idx} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                        <div className="bg-cyan-400 text-indigo-950 font-extrabold px-2.5 py-0.5 rounded text-xs inline-block mb-3 shadow-sm">STEP {item.step}</div>
+                        <h4 className="font-bold text-lg mb-2 text-white">{item.title}</h4>
+                        <p className="text-indigo-100 text-sm leading-relaxed">{item.desc}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                { num: '1', title: 'IT 채용 트렌드 & 취업특강', desc: 'IT·클라우드 업계 최신 채용 트렌드, 직무별 핵심 역량(Tech Stack) 분석과 취업 준비 방향 제시' },
-                { num: '2', title: '1:1 이력서·자기소개서 코칭', desc: '개인별 프로젝트 경험과 강점을 분석해 최적의 이력서·자소서 완성까지 1:1 밀착 지도' },
-                { num: '3', title: '실전 대비 1:1 모의면접 훈련', desc: '현직 실무자 출신 코치와 실전형 모의면접 시뮬레이션 진행, 실시간 피드백 제공' },
-              ].map(item => (
-                <div key={item.num} className="bg-white p-8 rounded-2xl border border-gray-200 text-center shadow-sm">
-                  <div className="w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-6 shadow-md">{item.num}</div>
-                  <h4 className="font-bold text-xl text-gray-900 mb-3">{item.title}</h4>
-                  <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
-                </div>
-              ))}
-            </div>
+              <div className="grid md:grid-cols-3 gap-6">
+                {[
+                  { num: '1', title: 'IT 채용 트렌드 & 취업특강', desc: 'IT·클라우드 업계 최신 채용 트렌드, 직무별 핵심 역량(Tech Stack) 분석과 취업 준비 방향 제시' },
+                  { num: '2', title: '1:1 이력서·자기소개서 코칭', desc: '개인별 프로젝트 경험과 강점을 분석해 최적의 이력서·자소서 완성까지 1:1 밀착 지도' },
+                  { num: '3', title: '실전 대비 1:1 모의면접 훈련', desc: '현직 실무자 출신 코치와 실전형 모의면접 시뮬레이션 진행, 실시간 피드백 제공' },
+                ].map(item => (
+                  <div key={item.num} className="bg-white p-8 rounded-2xl border border-gray-200 text-center shadow-sm">
+                    <div className="w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-6 shadow-md">{item.num}</div>
+                    <h4 className="font-bold text-xl text-gray-900 mb-3">{item.title}</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
 
-            <div className="mt-8 text-center text-sm font-medium text-gray-500 bg-gray-100 py-3 rounded-lg border border-gray-200">
-              수료 후에도 <strong className="text-indigo-600">D+180 사후 관리</strong> — 미취업자 대상 맞춤 채용 정보 제공 · 재매칭 서비스 · 취업 현황 추적 관리
+              <div className="mt-8 text-center text-sm font-medium text-gray-500 bg-gray-100 py-3 rounded-lg border border-gray-200">
+                수료 후에도 <strong className="text-indigo-600">D+180 사후 관리</strong> — 미취업자 대상 맞춤 채용 정보 제공 · 재매칭 서비스 · 취업 현황 추적 관리
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </section>
 
         {/* --- Reviews --- */}
         <section className="py-24 bg-slate-900 text-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <span className="text-indigo-400 font-bold tracking-widest text-sm mb-2 block uppercase">Reviews</span>
               <h2 className="text-3xl md:text-4xl font-extrabold mb-4">수강생의 목소리</h2>
@@ -2443,206 +2470,216 @@ export default function App() {
             </div>
             <p className="text-center text-xs text-slate-500 mt-8">기존 운영 K-디지털 트레이닝 과정 수강평(고용24 등록 후기) 기준</p>
           </div>
+          </ScrollReveal>
         </section>
 
         {/* --- Project Review --- */}
         <section className="py-20 bg-[#F4F8FB] border-t border-slate-200/80">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            {/* Header Pill Badge */}
-            <div className="inline-block bg-indigo-100/80 text-indigo-700 text-xs font-black px-4 py-1.5 rounded-full tracking-wider uppercase mb-4 shadow-xs">
-              PROJECT REVIEW
-            </div>
-
-            {/* Section Title */}
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
-              프로젝트 품평회 현장 스케치
-            </h2>
-
-            {/* Subtitle */}
-            <p className="text-base md:text-lg text-slate-600 font-medium mb-12 max-w-3xl mx-auto">
-              교육의 마지막, 실전 프로젝트의 결과를 발표하고 현업 전문가의 피드백을 받는 품평회 현장입니다.
-            </p>
-
-            {/* Content Grid */}
-            <div className="grid lg:grid-cols-12 gap-8 items-stretch text-left">
-              {/* Left Column: Video */}
-              <div className="lg:col-span-7 bg-black rounded-2xl overflow-hidden shadow-lg border border-slate-200/80 flex items-center justify-center">
-                <video
-                  controls
-                  preload="metadata"
-                  playsInline
-                  className="w-full h-full object-cover rounded-2xl max-h-[460px]"
-                  src="https://training.megazone.com/ai-campus/vid/sketch.mp4"
-                />
+          <ScrollReveal>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              {/* Header Pill Badge */}
+              <div className="inline-block bg-indigo-100/80 text-indigo-700 text-xs font-black px-4 py-1.5 rounded-full tracking-wider uppercase mb-4 shadow-xs">
+                PROJECT REVIEW
               </div>
 
-              {/* Right Column: 3 Feature Cards */}
-              <div className="lg:col-span-5 flex flex-col justify-between gap-4">
-                {[
-                  {
-                    num: '01',
-                    text: '실전 프로젝트 결과를 직접 발표하는 공식 품평회',
-                  },
-                  {
-                    num: '02',
-                    text: '현업 전문가 · 멘토의 실무 관점 피드백',
-                  },
-                  {
-                    num: '03',
-                    text: '우수 프로젝트는 채용 연계 평가에 반영',
-                  },
-                ].map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-white rounded-2xl p-6 md:p-8 border border-slate-200/90 shadow-xs hover:shadow-md transition-all flex items-center gap-5 flex-1"
-                  >
-                    <div className="bg-indigo-50 text-indigo-600 font-black text-sm px-3.5 py-2 rounded-xl flex items-center justify-center shrink-0">
-                      {item.num}
+              {/* Section Title */}
+              <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
+                프로젝트 품평회 현장 스케치
+              </h2>
+
+              {/* Subtitle */}
+              <p className="text-base md:text-lg text-slate-600 font-medium mb-12 max-w-3xl mx-auto">
+                교육의 마지막, 실전 프로젝트의 결과를 발표하고 현업 전문가의 피드백을 받는 품평회 현장입니다.
+              </p>
+
+              {/* Content Grid */}
+              <div className="grid lg:grid-cols-12 gap-8 items-stretch text-left">
+                {/* Left Column: Video */}
+                <div className="lg:col-span-7 bg-black rounded-2xl overflow-hidden shadow-lg border border-slate-200/80 flex items-center justify-center">
+                  <video
+                    controls
+                    preload="metadata"
+                    playsInline
+                    className="w-full h-full object-cover rounded-2xl max-h-[460px]"
+                    src="https://training.megazone.com/ai-campus/vid/sketch.mp4"
+                  />
+                </div>
+
+                {/* Right Column: 3 Feature Cards */}
+                <div className="lg:col-span-5 flex flex-col justify-between gap-4">
+                  {[
+                    {
+                      num: '01',
+                      text: '실전 프로젝트 결과를 직접 발표하는 공식 품평회',
+                    },
+                    {
+                      num: '02',
+                      text: '현업 전문가 · 멘토의 실무 관점 피드백',
+                    },
+                    {
+                      num: '03',
+                      text: '우수 프로젝트는 채용 연계 평가에 반영',
+                    },
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="bg-white rounded-2xl p-6 md:p-8 border border-slate-200/90 shadow-xs hover:shadow-md transition-all flex items-center gap-5 flex-1"
+                    >
+                      <div className="bg-indigo-50 text-indigo-600 font-black text-sm px-3.5 py-2 rounded-xl flex items-center justify-center shrink-0">
+                        {item.num}
+                      </div>
+                      <div className="text-base md:text-lg font-extrabold text-slate-800 leading-snug">
+                        {item.text}
+                      </div>
                     </div>
-                    <div className="text-base md:text-lg font-extrabold text-slate-800 leading-snug">
-                      {item.text}
+                  ))}
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </section>
+
+        {/* --- Who --- */}
+        <section className="py-24 bg-white">
+          <ScrollReveal>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Who</span>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">이런 분께 추천합니다</h2>
+              <p className="text-lg text-gray-600 mb-16">전공·경력과 무관하게, AI 엔지니어로 성장하고 싶은 분이라면 누구나 시작할 수 있습니다.</p>
+
+              <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto text-left mb-12">
+                {[
+                  { id: '01', title: 'IT/AI 직무 취업을 준비하는 분', desc: '실무 프로젝트 중심 커리큘럼으로 취업 포트폴리오를 완성합니다.' },
+                  { id: '02', title: '이공계 졸업(예정)으로 AI 직무 전환을 준비하는 분', desc: '기존 전공 지식을 살려 AI·클라우드 직무로 커리어를 확장합니다.' },
+                  { id: '03', title: '비전공이지만 AI에 도전하려는 분', desc: '코딩·IT 기초 경험이 있다면 공통 기초 과정으로 따라올 수 있습니다.' },
+                  { id: '04', title: '기초부터 탄탄히 실무 역량을 쌓고 싶은 분', desc: '개념 학습부터 현업형 프로젝트까지 단계별로 완주합니다.' },
+                ].map(item => (
+                  <div key={item.id} className="bg-gray-50 p-8 rounded-2xl flex gap-6 items-start">
+                    <div className="text-indigo-200 font-black text-4xl">{item.id}</div>
+                    <div>
+                      <h4 className="font-bold text-lg text-gray-900 mb-2">{item.title}</h4>
+                      <p className="text-gray-600 text-sm">{item.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* --- Who --- */}
-        <section className="py-24 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Who</span>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">이런 분께 추천합니다</h2>
-            <p className="text-lg text-gray-600 mb-16">전공·경력과 무관하게, AI 엔지니어로 성장하고 싶은 분이라면 누구나 시작할 수 있습니다.</p>
-
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto text-left mb-12">
-              {[
-                { id: '01', title: 'IT/AI 직무 취업을 준비하는 분', desc: '실무 프로젝트 중심 커리큘럼으로 취업 포트폴리오를 완성합니다.' },
-                { id: '02', title: '이공계 졸업(예정)으로 AI 직무 전환을 준비하는 분', desc: '기존 전공 지식을 살려 AI·클라우드 직무로 커리어를 확장합니다.' },
-                { id: '03', title: '비전공이지만 AI에 도전하려는 분', desc: '코딩·IT 기초 경험이 있다면 공통 기초 과정으로 따라올 수 있습니다.' },
-                { id: '04', title: '기초부터 탄탄히 실무 역량을 쌓고 싶은 분', desc: '개념 학습부터 현업형 프로젝트까지 단계별로 완주합니다.' },
-              ].map(item => (
-                <div key={item.id} className="bg-gray-50 p-8 rounded-2xl flex gap-6 items-start">
-                  <div className="text-indigo-200 font-black text-4xl">{item.id}</div>
-                  <div>
-                    <h4 className="font-bold text-lg text-gray-900 mb-2">{item.title}</h4>
-                    <p className="text-gray-600 text-sm">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          </ScrollReveal>
         </section>
 
         {/* --- Process --- */}
         <section className="py-24 bg-gray-50 border-t border-gray-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Process</span>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">지원 안내</h2>
-              <p className="text-lg text-gray-600">신청서 접수 후 평가·발표 일정은 개별 안내드립니다.</p>
-            </div>
-
-            <div className="grid lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
-              {/* Requirements */}
-              <div className="lg:col-span-2 bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
-                <h3 className="font-bold text-xl text-gray-900 mb-6 flex items-center gap-2">
-                  <Check className="w-5 h-5 text-indigo-600" /> 지원 자격
-                </h3>
-                <ul className="space-y-4 text-gray-600 text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 flex-shrink-0"></span>
-                    학력 및 전공 무관
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 flex-shrink-0"></span>
-                    국민내일배움카드 보유자 또는 신규 발급 가능자 (발급 문의: 고용노동부 1350)
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 flex-shrink-0"></span>
-                    교육 기간 동안 전일 오프라인 참여 및 수료 후 취업이 가능하신 분
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 flex-shrink-0"></span>
-                    졸업 요건을 충족한 졸업(예정)자 및 미취업자 (재직자는 교육 시작 전 퇴직 처리 필수)
-                  </li>
-                </ul>
+          <ScrollReveal>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-16">
+                <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Process</span>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">지원 안내</h2>
+                <p className="text-lg text-gray-600">신청서 접수 후 평가·발표 일정은 개별 안내드립니다.</p>
               </div>
 
-              {/* Steps */}
-              <div className="lg:col-span-3 bg-white rounded-2xl p-8 border border-gray-200 shadow-sm flex flex-col justify-center">
-                <h3 className="font-bold text-xl text-gray-900 mb-8 flex items-center gap-2">
-                  <Briefcase className="w-5 h-5 text-indigo-600" /> 지원 절차
-                </h3>
-                
-                <div className="flex flex-col sm:flex-row justify-between gap-4 relative">
-                  {/* Progress Line */}
-                  <div className="hidden sm:block absolute top-6 left-10 right-10 h-0.5 bg-gray-100 z-0"></div>
-                  
-                  {[
-                    { step: '1', title: '신청서 작성', sub: '지금 접수 중', active: true },
-                    { step: '2', title: '역량 및 면접 평가', sub: '개별 안내 예정' },
-                    { step: '3', title: '합격자 발표', sub: '일정 추후 공지' },
-                    { step: '4', title: '최종 입과', sub: '9월 중 개강' },
-                  ].map((s, idx) => (
-                    <div key={idx} className="relative z-10 flex flex-row sm:flex-col items-center gap-4 sm:gap-3 text-center">
-                      <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg transition-colors flex-shrink-0 ${s.active ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200 ring-4 ring-white' : 'bg-gray-100 text-gray-400 ring-4 ring-white'}`}>
-                        {s.step}
-                      </div>
-                      <div className="text-left sm:text-center">
-                        <div className={`font-bold text-sm ${s.active ? 'text-indigo-600' : 'text-gray-900'}`}>{s.title}</div>
-                        <div className="text-xs text-gray-500 mt-1">{s.sub}</div>
-                      </div>
-                    </div>
-                  ))}
+              <div className="grid lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
+                {/* Requirements */}
+                <div className="lg:col-span-2 bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
+                  <h3 className="font-bold text-xl text-gray-900 mb-6 flex items-center gap-2">
+                    <Check className="w-5 h-5 text-indigo-600" /> 지원 자격
+                  </h3>
+                  <ul className="space-y-4 text-gray-600 text-sm">
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 flex-shrink-0"></span>
+                      학력 및 전공 무관
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 flex-shrink-0"></span>
+                      국민내일배움카드 보유자 또는 신규 발급 가능자 (발급 문의: 고용노동부 1350)
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 flex-shrink-0"></span>
+                      교육 기간 동안 전일 오프라인 참여 및 수료 후 취업이 가능하신 분
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 flex-shrink-0"></span>
+                      졸업 요건을 충족한 졸업(예정)자 및 미취업자 (재직자는 교육 시작 전 퇴직 처리 필수)
+                    </li>
+                  </ul>
                 </div>
-                <p className="text-xs text-gray-400 mt-8">※ 과정 신청 시 지원 동기와 무관한 내용 또는 허위사실·비방·욕설을 작성할 경우 별도 안내 없이 참여가 제한됩니다.</p>
+
+                {/* Steps */}
+                <div className="lg:col-span-3 bg-white rounded-2xl p-8 border border-gray-200 shadow-sm flex flex-col justify-center">
+                  <h3 className="font-bold text-xl text-gray-900 mb-8 flex items-center gap-2">
+                    <Briefcase className="w-5 h-5 text-indigo-600" /> 지원 절차
+                  </h3>
+                  
+                  <div className="flex flex-col sm:flex-row justify-between gap-4 relative">
+                    {/* Progress Line */}
+                    <div className="hidden sm:block absolute top-6 left-10 right-10 h-0.5 bg-gray-100 z-0"></div>
+                    
+                    {[
+                      { step: '1', title: '신청서 작성', sub: '지금 접수 중', active: true },
+                      { step: '2', title: '역량 및 면접 평가', sub: '개별 안내 예정' },
+                      { step: '3', title: '합격자 발표', sub: '일정 추후 공지' },
+                      { step: '4', title: '최종 입과', sub: '9월 중 개강' },
+                    ].map((s, idx) => (
+                      <div key={idx} className="relative z-10 flex flex-row sm:flex-col items-center gap-4 sm:gap-3 text-center">
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg transition-colors flex-shrink-0 ${s.active ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200 ring-4 ring-white' : 'bg-gray-100 text-gray-400 ring-4 ring-white'}`}>
+                          {s.step}
+                        </div>
+                        <div className="text-left sm:text-center">
+                          <div className={`font-bold text-sm ${s.active ? 'text-indigo-600' : 'text-gray-900'}`}>{s.title}</div>
+                          <div className="text-xs text-gray-500 mt-1">{s.sub}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-gray-400 mt-8">※ 과정 신청 시 지원 동기와 무관한 내용 또는 허위사실·비방·욕설을 작성할 경우 별도 안내 없이 참여가 제한됩니다.</p>
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         </section>
 
         {/* --- Location --- */}
         <section className="py-24 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Location</span>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">오시는 길 · 교육장소</h2>
-              <p className="text-lg text-gray-600">두 곳의 메가존클라우드 캠퍼스에서 과정별로 진행됩니다.</p>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-8">
-              {/* Campus 1 */}
-              <div className="rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <GwacheonCarousel />
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">과천 캠퍼스</h3>
-                  <p className="text-gray-600 font-medium mb-4">과천 메가존클라우드 2층 교육장</p>
-                  <p className="text-sm text-gray-500 flex items-center gap-2">
-                    <MapPin className="w-4 h-4" /> 경기도 과천시 과천대로7길 74
-                  </p>
-                </div>
+          <ScrollReveal>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-16">
+                <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">Location</span>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">오시는 길 · 교육장소</h2>
+                <p className="text-lg text-gray-600">두 곳의 메가존클라우드 캠퍼스에서 과정별로 진행됩니다.</p>
               </div>
 
-              {/* Campus 2 */}
-              <div className="rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <YeoksamCarousel />
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">역삼 캠퍼스</h3>
-                  <p className="text-gray-600 font-medium mb-4">역삼 메가존클라우드 2층 교육장</p>
-                  <p className="text-sm text-gray-500 flex items-center gap-2">
-                    <MapPin className="w-4 h-4" /> 서울 강남구 논현로85길 46
-                  </p>
+              <div className="grid lg:grid-cols-2 gap-8">
+                {/* Campus 1 */}
+                <div className="rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                  <GwacheonCarousel />
+                  <div className="p-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">과천 캠퍼스</h3>
+                    <p className="text-gray-600 font-medium mb-4">과천 메가존클라우드 2층 교육장</p>
+                    <p className="text-sm text-gray-500 flex items-center gap-2">
+                      <MapPin className="w-4 h-4" /> 경기도 과천시 과천대로7길 74
+                    </p>
+                  </div>
+                </div>
+
+                {/* Campus 2 */}
+                <div className="rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                  <YeoksamCarousel />
+                  <div className="p-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">역삼 캠퍼스</h3>
+                    <p className="text-gray-600 font-medium mb-4">역삼 메가존클라우드 2층 교육장</p>
+                    <p className="text-sm text-gray-500 flex items-center gap-2">
+                      <MapPin className="w-4 h-4" /> 서울 강남구 논현로85길 46
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         </section>
 
         {/* --- FAQ --- */}
         <section id="faq" className="py-24 bg-gray-50 border-t border-gray-200">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <span className="text-indigo-600 font-bold tracking-widest text-sm mb-2 block uppercase">FAQ</span>
               <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">자주 묻는 질문</h2>
@@ -2653,6 +2690,7 @@ export default function App() {
               ))}
             </div>
           </div>
+          </ScrollReveal>
         </section>
 
         {/* --- Consultation Application Form (Fast Inquiry) --- */}
