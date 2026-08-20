@@ -388,19 +388,14 @@ const ConsultationSection = () => {
     setIsSubmitted(true);
 
     // 2. Prepare Form Data according to InputHaven spec & requirement
-    const emailSubject = '메가존클라우드 AI-Native 부트캠프 문의';
     const formData = new FormData();
     formData.append('_form_id', '914168973e93bda60f4eac1e7cbe1449');
-    formData.append('_subject', emailSubject);
-    formData.append('subject', emailSubject);
-    formData.append('_title', emailSubject);
-    formData.append('title', emailSubject);
     formData.append('name', name);
     formData.append('course', course);
     formData.append('age', age);
     formData.append('phone', phone);
     
-    const fullMessage = `[메일 제목] ${emailSubject}\n[과정명] ${course}\n[이름] ${name}\n[나이] ${age}\n[연락처] ${phone}\n[문의내용] ${message || '없음'}`;
+    const fullMessage = `[과정명] ${course}\n[이름] ${name}\n[나이] ${age}\n[연락처] ${phone}\n[문의내용] ${message || '없음'}`;
     formData.append('message', fullMessage);
 
     // 3. Background transmission with keepalive: true
@@ -503,9 +498,6 @@ const ConsultationSection = () => {
                   className="space-y-5"
                 >
                   <input type="hidden" name="_form_id" value="914168973e93bda60f4eac1e7cbe1449" />
-                  <input type="hidden" name="_subject" value="메가존클라우드 AI-Native 부트캠프 문의" />
-                  <input type="hidden" name="subject" value="메가존클라우드 AI-Native 부트캠프 문의" />
-                  <input type="hidden" name="_title" value="메가존클라우드 AI-Native 부트캠프 문의" />
 
                   {/* 이름 & 나이 Row */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -562,7 +554,7 @@ const ConsultationSection = () => {
                       과정명 <span className="text-red-500">*</span>
                     </label>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                      {['AI 에이전트', 'AI 아키텍트', 'AI 보안', 'AI 데이터'].map((c) => (
+                      {['메가존 AI에이전트', '메가존 AI아키텍트', '메가존 AI보안', '메가존 AI데이터'].map((c) => (
                         <label
                           key={c}
                           className={`flex items-center justify-center gap-1.5 px-3 py-3 rounded-xl border text-xs font-bold cursor-pointer transition-all ${
