@@ -45,9 +45,9 @@ const ScrollReveal: React.FC<{ children: React.ReactNode; className?: string; de
 // --- Data ---
 const NAV_LINKS = [
   { name: 'AI 에이전트', href: 'https://megazone-ai-01.vercel.app' },
-  { name: 'AI 아키텍트', href: '#architect' },
-  { name: 'AI 보안', href: '#security' },
-  { name: 'AI 데이터', href: '#data' },
+  { name: 'AI 아키텍트', href: 'https://megazone-ai-02.vercel.app' },
+  { name: 'AI 보안', href: 'https://megazone-ai-03.vercel.app' },
+  { name: 'AI 데이터', href: 'https://megazone-ai-04.vercel.app' },
   { name: 'FAQ', href: '#faq' },
 ];
 
@@ -1253,7 +1253,7 @@ export default function App() {
                       교육 신청하기
                     </a>
                     <button 
-                      onClick={() => { window.location.href = 'https://megazone-ai-01.vercel.app'; }}
+                      onClick={() => { window.location.href = 'https://megazone-ai-02.vercel.app'; }}
                       className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2"
                     >
                       과정 상세 보기 <ArrowRight className="w-4 h-4" />
@@ -1384,7 +1384,7 @@ export default function App() {
                       교육 신청하기
                     </a>
                     <button 
-                      onClick={() => { window.location.href = 'https://megazone-ai-01.vercel.app'; }}
+                      onClick={() => { window.location.href = 'https://megazone-ai-03.vercel.app'; }}
                       className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2"
                     >
                       과정 상세 보기 <ArrowRight className="w-4 h-4" />
@@ -1515,7 +1515,7 @@ export default function App() {
                       교육 신청하기
                     </a>
                     <button 
-                      onClick={() => { window.location.href = 'https://megazone-ai-01.vercel.app'; }}
+                      onClick={() => { window.location.href = 'https://megazone-ai-04.vercel.app'; }}
                       className="text-indigo-600 font-bold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors flex items-center gap-2"
                     >
                       과정 상세 보기 <ArrowRight className="w-4 h-4" />
