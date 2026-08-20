@@ -1,10 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  Menu, X, ChevronDown, ChevronRight, Check, PlayCircle, 
+  Menu, X, ChevronDown, ChevronUp, ChevronRight, ChevronLeft, Check, PlayCircle, 
   MapPin, Monitor, Coins, Briefcase, Compass, Award, 
   ArrowRight, Shield, Database, Cloud, Cpu, Building, GraduationCap, Users,
   Phone, Send
 } from 'lucide-react';
+
+// --- Scroll Reveal Helper Component ---
+const ScrollReveal: React.FC<{ children: React.ReactNode; className?: string; delay?: number }> = ({ children, className = '', delay = 0 }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      style={{ transitionDelay: `${delay}ms` }}
+      className={`transition-all duration-700 ease-out transform ${
+        isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-[0.98]'
+      } ${className}`}
+    >
+      {children}
+    </div>
+  );
+};
 
 // --- Data ---
 const NAV_LINKS = [
@@ -84,6 +120,253 @@ const AccordionItem = ({ question, answer }: { question: string, answer: string,
   );
 };
 
+const GWACHEON_IMAGES = [
+  "https://postfiles.pstatic.net/MjAyNjA4MjBfMjg5/MDAxNzg3MTg3NzQ5NDYy.aYguuDJVlzdi4ShU-AoVP2aX4ianE_HrV8jsUlUwS3cg.ov-LuLqPI4KAe5dG0nxrCDpYOiOeuOQf-1xjzoz8GWsg.JPEG/KakaoTalk_20260819_191135989_20.jpg?type=w966",
+  "https://postfiles.pstatic.net/MjAyNjA4MjBfMTI1/MDAxNzg3MTg3NzQ5NTM3.8Ow0fR29b5VVFEBO9oSlv9jc0pTFE5RNBzVv-qxS3hgg.345JJB8Z1JwoB3Kgcgc2AmSyEXBzwPLsiJCGG1wjxiMg.JPEG/KakaoTalk_20260819_191135989_21.jpg?type=w966",
+  "https://postfiles.pstatic.net/MjAyNjA4MjBfMTg5/MDAxNzg3MTg3NzQ2Nzg1.kzaCx6TA6r7VQor5wMe565EzE7yqqyRmj0f6EGFrCwAg.AMWSBXt5AyaUyiZkK8IE9SrniPpJ3LjjEpPoSmZaHGog.JPEG/KakaoTalk_20260819_191135989_15.jpg?type=w966",
+  "https://postfiles.pstatic.net/MjAyNjA4MjBfMTM4/MDAxNzg3MTg3NzQ2OTcw.xRUoNVgFdTks8jl-bAxm9Gm919-7JYtNzdFgkLg7lY8g.h3XpSUSV_Odmntoc0lGfsbG3GLSb4QFd3w_SvNcBX20g.JPEG/KakaoTalk_20260819_191135989_16.jpg?type=w966",
+  "https://postfiles.pstatic.net/MjAyNjA4MjBfMyAg/MDAxNzg3MTg3NzQ3MDUz.ce9GHg0-SM-a0lqk-ueI76u1L8teqXj-MDR2mn_PBmEg._YfW_BWQzCMDzlx1KHrT8lwDoF7_02ocN1uHX0lP65Ug.JPEG/KakaoTalk_20260819_191135989_18.jpg?type=w966",
+  "https://postfiles.pstatic.net/MjAyNjA4MjBfOTMg/MDAxNzg3MTg3NzQ3MDM4.TZTGW0Q_YeiYyQWHQ5M3VwyLby2wFftm5PG3dIEdaEEg.cBqE6v5SzgI0oa9dcYL4u9SB-M6My5LdELEb99VH5Ncg.JPEG/KakaoTalk_20260819_191135989_17.jpg?type=w966"
+];
+
+const FALLBACK_CAMPUS_IMAGES = [
+  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80"
+];
+
+
+
+
+
+const YEOKSAM_IMAGES = [
+  "https://postfiles.pstatic.net/MjAyNjA4MjBfMjY0/MDAxNzg3MTg3NzQ1ODk0.CM9g9N3rx_yedA9vWqHIO_ve15SqVgM5I37Qjy6mb90g.UTiz6496GI9uElhIg2WtlDSvR0UYEnsfKzsgFZtKR3Mg.JPEG/KakaoTalk_20260819_191135989.jpg?type=w966",
+  "https://postfiles.pstatic.net/MjAyNjA4MjBfMTc5/MDAxNzg3MTg3NzQ4MjY4.9GTLNBMiVMY-oG-yzKf2mEYowPaI1xIRCeZIk9MLFMcg.UIT7AzlYNpxugUsmW61ud018NSoHqMfFoeRxxIGWJ3cg.JPEG/KakaoTalk_20260819_191135989_02.jpg?type=w966",
+  "https://postfiles.pstatic.net/MjAyNjA4MjBfMjcy/MDAxNzg3MTg3NzQ4MzU2.JsRSmoSkCCfeeFI7G6PLWngXTJTePT4UMv_f4JYd6vMg.8YVJVD5kBE-UKJxE13pT0yNxOexvdKacvUpTP8LFcLEg.JPEG/KakaoTalk_20260819_191135989_03.jpg?type=w966",
+  "https://postfiles.pstatic.net/MjAyNjA4MjBfMTU2/MDAxNzg3MTg3NzQ4NDI3.HIYw-up2DQTQfiNy5llQxzlBvWsvYBYxD0Y9J1HHZJYg.erakYftx1txaHsdIjlkPvnsto6OvyzuiEdrmb8wl0ccg.JPEG/KakaoTalk_20260819_191135989_04.jpg?type=w966",
+  "https://postfiles.pstatic.net/MjAyNjA4MjBfMTUx/MDAxNzg3MTg3NzQ4OTMx.49PwR_8Vg9RNQJvrxLGNnJAEq_OkDZ_U_3jKcbSr2f4g.2ZlnFBof1DLWbsGtMITmETVjHecyRcAPr1i4eqq8Skgg.JPEG/KakaoTalk_20260819_191135989_05.jpg?type=w966",
+  "https://postfiles.pstatic.net/MjAyNjA4MjBfMjMy/MDAxNzg3MTg3NzQ3MjMw.0Sb0sKoplBTSyDTMDiK2HFZKZuCgFO-eTg1gNswyxPsg.BqKn25a0AnuiJsRRUxhP-oYY-komtWfJ2_CPFY1-Tt4g.JPEG/KakaoTalk_20260819_191135989_07.jpg?type=w966",
+  "https://postfiles.pstatic.net/MjAyNjA4MjBfMTAg/MDAxNzg3MTg3NzQ3ODYz.rhAha0FpDpUCnKBu7ao4wlTKPFLMNxsGDJpoOYIMa4kg.A0T1qyCedZE52hE3CsCTi9BUZ7m8FWI0NvyRpOonbp8g.JPEG/KakaoTalk_20260819_191135989_08.jpg?type=w966",
+  "https://postfiles.pstatic.net/MjAyNjA4MjBfMSAg/MDAxNzg3MTg3NzQ4MTcw.WNTvLRW69KmwEYSxzj_hPcw5peM3OOl5_od-CWLSbZgg.Sl6psbHWd7tnphFYGGWbqprzuvEudE0lfFZCOgwTNJsg.JPEG/KakaoTalk_20260819_191135989_09.jpg?type=w966"
+];
+
+const YeoksamCarousel = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [imageSources, setImageSources] = useState<string[]>(() =>
+    YEOKSAM_IMAGES.map((url) => `https://wsrv.nl/?url=${encodeURIComponent(url)}`)
+  );
+
+  const handleImageError = (index: number) => {
+    setImageSources((prev) => {
+      const next = [...prev];
+      if (next[index].startsWith('https://wsrv.nl/')) {
+        next[index] = YEOKSAM_IMAGES[index];
+      } else {
+        next[index] = FALLBACK_CAMPUS_IMAGES[index % FALLBACK_CAMPUS_IMAGES.length];
+      }
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % YEOKSAM_IMAGES.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, [isHovered]);
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev - 1 + YEOKSAM_IMAGES.length) % YEOKSAM_IMAGES.length);
+  };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev + 1) % YEOKSAM_IMAGES.length);
+  };
+
+  return (
+    <div 
+      className="h-64 sm:h-72 bg-slate-900 relative overflow-hidden group select-none"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Track Badges Overlay */}
+      <div className="absolute top-4 left-4 z-20 flex gap-2">
+        <span className="bg-blue-600/90 backdrop-blur-xs text-white text-xs font-bold px-2.5 py-1 rounded-md shadow-xs">TRACK 03 보안</span>
+        <span className="bg-blue-600/90 backdrop-blur-xs text-white text-xs font-bold px-2.5 py-1 rounded-md shadow-xs">TRACK 04 데이터</span>
+      </div>
+
+      {/* Counter Badge */}
+      <div className="absolute top-4 right-4 z-20 bg-black/60 backdrop-blur-xs text-white text-xs font-medium px-2.5 py-1 rounded-full">
+        {currentIndex + 1} / {YEOKSAM_IMAGES.length}
+      </div>
+
+      {/* Image Slider */}
+      <div className="w-full h-full relative">
+        {YEOKSAM_IMAGES.map((_, idx) => (
+          <img
+            key={idx}
+            src={imageSources[idx]}
+            alt={`역삼 캠퍼스 사진 ${idx + 1}`}
+            referrerPolicy="no-referrer"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out ${
+              idx === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
+            }`}
+            onError={() => handleImageError(idx)}
+          />
+        ))}
+      </div>
+
+      {/* Navigation Buttons */}
+      <button
+        onClick={handlePrev}
+        aria-label="이전 사진"
+        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-black/40 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105"
+      >
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+
+      <button
+        onClick={handleNext}
+        aria-label="다음 사진"
+        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-black/40 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105"
+      >
+        <ChevronRight className="w-5 h-5" />
+      </button>
+
+      {/* Slide Dots Indicator */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 px-3 py-1 bg-black/30 backdrop-blur-xs rounded-full">
+        {YEOKSAM_IMAGES.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={(e) => {
+              e.stopPropagation();
+              setCurrentIndex(idx);
+            }}
+            className={`h-2 rounded-full transition-all ${
+              idx === currentIndex ? 'bg-white w-5' : 'bg-white/50 w-2 hover:bg-white/80'
+            }`}
+            aria-label={`${idx + 1}번 사진으로 이동`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const GwacheonCarousel = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [imageSources, setImageSources] = useState<string[]>(() =>
+    GWACHEON_IMAGES.map((url) => `https://wsrv.nl/?url=${encodeURIComponent(url)}`)
+  );
+
+  const handleImageError = (index: number) => {
+    setImageSources((prev) => {
+      const next = [...prev];
+      if (next[index].startsWith('https://wsrv.nl/')) {
+        next[index] = GWACHEON_IMAGES[index];
+      } else {
+        next[index] = FALLBACK_CAMPUS_IMAGES[index % FALLBACK_CAMPUS_IMAGES.length];
+      }
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % GWACHEON_IMAGES.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, [isHovered]);
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev - 1 + GWACHEON_IMAGES.length) % GWACHEON_IMAGES.length);
+  };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev + 1) % GWACHEON_IMAGES.length);
+  };
+
+  return (
+    <div 
+      className="h-64 sm:h-72 bg-slate-900 relative overflow-hidden group select-none"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Track Badges Overlay */}
+      <div className="absolute top-4 left-4 z-20 flex gap-2">
+        <span className="bg-indigo-600/90 backdrop-blur-xs text-white text-xs font-bold px-2.5 py-1 rounded-md shadow-xs">TRACK 01 에이전트</span>
+        <span className="bg-indigo-600/90 backdrop-blur-xs text-white text-xs font-bold px-2.5 py-1 rounded-md shadow-xs">TRACK 02 아키텍트</span>
+      </div>
+
+      {/* Counter Badge */}
+      <div className="absolute top-4 right-4 z-20 bg-black/60 backdrop-blur-xs text-white text-xs font-medium px-2.5 py-1 rounded-full">
+        {currentIndex + 1} / {GWACHEON_IMAGES.length}
+      </div>
+
+      {/* Image Slider */}
+      <div className="w-full h-full relative">
+        {GWACHEON_IMAGES.map((_, idx) => (
+          <img
+            key={idx}
+            src={imageSources[idx]}
+            alt={`과천 캠퍼스 사진 ${idx + 1}`}
+            referrerPolicy="no-referrer"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out ${
+              idx === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
+            }`}
+            onError={() => handleImageError(idx)}
+          />
+        ))}
+      </div>
+
+      {/* Navigation Buttons */}
+      <button
+        onClick={handlePrev}
+        aria-label="이전 사진"
+        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-black/40 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105"
+      >
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+
+      <button
+        onClick={handleNext}
+        aria-label="다음 사진"
+        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-black/40 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105"
+      >
+        <ChevronRight className="w-5 h-5" />
+      </button>
+
+      {/* Slide Dots Indicator */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 px-3 py-1 bg-black/30 backdrop-blur-xs rounded-full">
+        {GWACHEON_IMAGES.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={(e) => {
+              e.stopPropagation();
+              setCurrentIndex(idx);
+            }}
+            className={`h-2 rounded-full transition-all ${
+              idx === currentIndex ? 'bg-white w-5' : 'bg-white/50 w-2 hover:bg-white/80'
+            }`}
+            aria-label={`${idx + 1}번 사진으로 이동`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const ConsultationSection = () => {
   const [course, setCourse] = useState('AI 에이전트');
   const [name, setName] = useState('');
@@ -91,6 +374,7 @@ const ConsultationSection = () => {
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [agreePrivacy, setAgreePrivacy] = useState(true);
+  const [showPrivacyDetails, setShowPrivacyDetails] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -179,7 +463,7 @@ const ConsultationSection = () => {
               
               <div className="flex items-center gap-2 mb-8">
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">빠른 교육상담 신청</h3>
-                <span className="w-3 h-3 rounded-full bg-pink-400 inline-block shrink-0"></span>
+                <span className="w-3 h-3 rounded-full bg-indigo-600 inline-block shrink-0"></span>
               </div>
 
               {isSubmitted ? (
@@ -288,7 +572,7 @@ const ConsultationSection = () => {
                           />
                           <span
                             className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${
-                              course === c ? 'border-white bg-pink-400' : 'border-slate-400 bg-white'
+                              course === c ? 'border-white bg-indigo-600' : 'border-slate-400 bg-white'
                             }`}
                           ></span>
                           <span className="whitespace-nowrap">{c}</span>
@@ -313,19 +597,66 @@ const ConsultationSection = () => {
                   </div>
 
                   {/* 개인정보 동의 */}
-                  <div className="flex items-center justify-between pt-1">
-                    <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-700">
-                      <input
-                        type="checkbox"
-                        checked={agreePrivacy}
-                        onChange={(e) => setAgreePrivacy(e.target.checked)}
-                        className="w-4 h-4 rounded text-black focus:ring-black border-slate-300 accent-black"
-                      />
-                      <span>개인정보 수집 및 이용에 동의합니다.</span>
-                    </label>
-                    <button type="button" className="text-[11px] font-medium text-slate-400 hover:text-slate-600 flex items-center gap-0.5">
-                      자세히보기 <ChevronDown className="w-3 h-3" />
-                    </button>
+                  <div>
+                    <div className="flex items-center justify-between pt-1">
+                      <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-700">
+                        <input
+                          type="checkbox"
+                          checked={agreePrivacy}
+                          onChange={(e) => setAgreePrivacy(e.target.checked)}
+                          className="w-4 h-4 rounded text-black focus:ring-black border-slate-300 accent-black"
+                        />
+                        <span>개인정보 수집 및 이용에 동의합니다.</span>
+                      </label>
+                      <button 
+                        type="button" 
+                        onClick={() => setShowPrivacyDetails(!showPrivacyDetails)}
+                        className="text-[11px] font-semibold text-slate-500 hover:text-slate-800 flex items-center gap-0.5 transition-colors"
+                      >
+                        {showPrivacyDetails ? '접기' : '자세히보기'} 
+                        {showPrivacyDetails ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                      </button>
+                    </div>
+
+                    {showPrivacyDetails && (
+                      <div className="mt-3.5 p-3.5 bg-slate-50 border border-slate-200/90 rounded-xl text-[11px] leading-relaxed text-slate-600 max-h-28 overflow-y-auto space-y-2.5 font-normal animate-in fade-in duration-200 shadow-inner">
+                        <div className="font-bold text-slate-900 text-xs pb-1 border-b border-slate-200/60">
+                          [개인정보 수집·이용 동의] (필수)
+                        </div>
+                        
+                        <div>
+                          <div className="font-bold text-slate-800">1. 개인정보의 수집·이용 목적</div>
+                          <ul className="list-disc list-inside text-slate-600 space-y-0.5 mt-0.5 pl-1">
+                            <li>교육 과정 신청 접수 및 본인 확인</li>
+                            <li>선발 전형 진행(서류 심사) 및 안내</li>
+                            <li>과정 개강, 설명회 등 관련 정보 안내 (문자, 이메일)</li>
+                          </ul>
+                        </div>
+
+                        <div>
+                          <div className="font-bold text-slate-800">2. 수집하는 개인정보 항목</div>
+                          <p className="text-slate-600 pl-1 mt-0.5">
+                            • 필수 항목: 이름, 연락처(휴대폰 번호), 과정명
+                          </p>
+                        </div>
+
+                        <div>
+                          <div className="font-bold text-slate-800">3. 개인정보의 보유 및 이용 기간</div>
+                          <ul className="list-disc list-inside text-slate-600 space-y-0.5 mt-0.5 pl-1">
+                            <li>수집 목적 달성 및 전형 종료 후 즉시 파기</li>
+                            <li>단, 최종 선발자의 경우 교육 종료 및 사후 관리 기간까지 보유 및 이용합니다.</li>
+                          </ul>
+                        </div>
+
+                        <div>
+                          <div className="font-bold text-slate-800">4. 개인정보 수집 거부에 관한 사항</div>
+                          <p className="text-slate-600 pl-1 mt-0.5 leading-snug">
+                            귀하께서는 본 안내에 따른 개인정보 수집, 이용에 대하여 동의를 거부하실 권리가 있습니다.<br />
+                            단, 이용자가 개인정보 수집 동의 거부를 하였을 경우에는 교육 신청이 불가합니다.
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Submit Button */}
@@ -377,7 +708,7 @@ export default function App() {
             {/* Desktop Nav */}
             <nav className="hidden md:flex space-x-8">
               {NAV_LINKS.map((link) => (
-                <a key={link.name} href={link.href} className="text-gray-600 hover:text-indigo-600 font-medium text-sm transition-colors">
+                <a key={link.name} href={link.href} className="text-gray-600 hover:text-indigo-600 font-bold text-sm transition-colors">
                   {link.name}
                 </a>
               ))}
@@ -408,17 +739,26 @@ export default function App() {
                   key={link.name} 
                   href={link.href} 
                   onClick={() => setIsMenuOpen(false)}
-                  className="block px-3 py-3 text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 rounded-md"
+                  className="block px-3 py-3 text-base font-bold text-gray-700 hover:text-indigo-600 hover:bg-gray-50 rounded-md"
                 >
                   {link.name}
                 </a>
               ))}
               <a 
                 href="#apply-menu-target" 
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => {
+                  setIsMenuOpen(false);
+                  const el = document.getElementById('apply-menu-target');
+                  if (el) {
+                    e.preventDefault();
+                    // Scroll 1 row further down than before
+                    const y = el.getBoundingClientRect().top + window.pageYOffset + 20;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                  }
+                }}
                 className="block w-full text-center mt-4 bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold"
               >
-                교육상담신청하기
+                교육상담 신청하기
               </a>
             </div>
           </div>
@@ -531,9 +871,19 @@ export default function App() {
                   <div className="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center text-2xl">🖥️</div>
                   <p className="font-bold text-gray-900 leading-snug">최고 사양 인프라<br/>무상 지원</p>
                 </div>
-                <div className="p-6 flex flex-col items-center text-center gap-3">
-                  <div className="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center text-2xl">🤝</div>
-                  <p className="font-bold text-gray-900 leading-snug">메가존클라우드<br/>인턴십 & 채용 연계</p>
+                {/* Highlighted Component 1 */}
+                <div className="p-6 flex flex-col items-center text-center gap-3 bg-gradient-to-br from-indigo-700 via-purple-700 to-indigo-900 text-white relative overflow-hidden group shadow-lg ring-2 ring-indigo-400/80 transition-all duration-300 hover:scale-[1.03]">
+                  <div className="absolute top-1.5 right-1.5 bg-amber-400 text-indigo-950 font-black text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse shadow-sm">
+                    BEST 혜택
+                  </div>
+                  <div className="w-13 h-13 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-3xl shadow-inner ring-2 ring-amber-300/70 animate-bounce">
+                    🤝
+                  </div>
+                  <p className="font-black text-white leading-snug text-base tracking-tight drop-shadow-sm">
+                    메가존클라우드<br/><span className="text-amber-300 underline decoration-amber-400 decoration-2 underline-offset-2">인턴십 &amp; 채용 연계</span>
+                  </p>
+                  {/* Shimmer line */}
+                  <div className="absolute -inset-x-full top-0 bottom-0 bg-gradient-to-r from-transparent via-white/25 to-transparent group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></div>
                 </div>
                 <div className="p-6 flex flex-col items-center text-center gap-3">
                   <div className="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center text-2xl">🧭</div>
@@ -1870,14 +2220,40 @@ export default function App() {
                 { icon: <Compass/>, title: '현직자 밀착 가이드', sub: '메가존 AI·클라우드 현직자 멘토링', desc: '아키텍처 설계부터 실전 코드 리뷰까지 현업 전문가의 실무 밀착 지도' },
                 { icon: <GraduationCap/>, title: '웰컴키트 & 수료증', sub: '프리미엄 웰컴키트 & 공식 수료증', desc: '웰컴키트 지급, 메가존클라우드 명의의 공식 수료증 수여' },
               ].map((item, idx) => (
-                <div key={idx} className="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-lg transition-shadow">
-                  <div className="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
-                    {React.cloneElement(item.icon as React.ReactElement, { className: 'w-7 h-7' })}
-                  </div>
-                  <div className="text-xs font-bold text-indigo-600 mb-2 bg-indigo-50 inline-block px-2 py-1 rounded">{item.title}</div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">{item.sub}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
-                </div>
+                idx === 0 ? (
+                  /* Highlighted Component 2 - Emerald Theme */
+                  <ScrollReveal key={idx} delay={idx * 80}>
+                    <div className="bg-gradient-to-br from-emerald-600 via-teal-700 to-emerald-950 text-white rounded-2xl p-8 border-2 border-emerald-300/90 shadow-2xl shadow-emerald-600/30 relative overflow-hidden group transform hover:-translate-y-1.5 transition-all duration-300">
+                      <div className="flex items-center justify-between mb-5">
+                        <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center ring-2 ring-emerald-300/60 shadow-inner">
+                          {React.cloneElement(item.icon as React.ReactElement, { className: 'w-7 h-7 text-emerald-100' })}
+                        </div>
+                        <span className="text-xs font-black text-emerald-950 bg-emerald-300 px-3 py-1 rounded-full shadow-md animate-pulse">
+                          핵심 혜택 01
+                        </span>
+                      </div>
+                      <div className="text-xs font-black text-emerald-200 mb-2 bg-emerald-800/80 inline-block px-2.5 py-1 rounded-md border border-emerald-400/40">
+                        {item.title}
+                      </div>
+                      <h3 className="text-xl font-extrabold text-white mb-3 tracking-tight">{item.sub}</h3>
+                      <p className="text-emerald-100 text-sm leading-relaxed">{item.desc}</p>
+
+                      {/* Animated Light Beam */}
+                      <div className="absolute -inset-x-full top-0 bottom-0 bg-gradient-to-r from-transparent via-white/25 to-transparent group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></div>
+                    </div>
+                  </ScrollReveal>
+                ) : (
+                  <ScrollReveal key={idx} delay={idx * 80}>
+                    <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-lg transition-shadow">
+                      <div className="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
+                        {React.cloneElement(item.icon as React.ReactElement, { className: 'w-7 h-7' })}
+                      </div>
+                      <div className="text-xs font-bold text-indigo-600 mb-2 bg-indigo-50 inline-block px-2 py-1 rounded">{item.title}</div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">{item.sub}</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+                    </div>
+                  </ScrollReveal>
+                )
               ))}
             </div>
           </div>
@@ -1908,19 +2284,25 @@ export default function App() {
                   <p className="text-indigo-100 mb-6">
                     교육 성과가 채용으로 이어지도록 설계된 메가존만의 취업 연계 트랙입니다. 인증된 우수 수료생을 메가존 그룹과 파트너사의 채용 포지션에 직접 연결합니다.
                   </p>
-                  <div className="bg-gradient-to-r from-amber-500/25 via-indigo-900/80 to-amber-500/15 rounded-xl p-5 border-2 border-amber-400/80 shadow-xl shadow-amber-500/10 relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
-                    {/* Shimmer effect on hover */}
-                    <div className="absolute -inset-x-full top-0 bottom-0 bg-gradient-to-r from-transparent via-amber-300/20 to-transparent group-hover:translate-x-full transition-transform duration-1000"></div>
-                    
-                    <div className="font-extrabold text-amber-300 mb-2 flex items-center gap-2 text-base relative z-10">
-                      <Award className="w-5 h-5 text-amber-300 animate-bounce" /> 
-                      <span>우수 수료생 특전</span>
-                      <span className="ml-auto text-[10px] bg-amber-400 text-indigo-950 font-black px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse">Special</span>
+
+                  {/* Highlighted Component 3 - Royal Sunburst Gold Theme */}
+                  <ScrollReveal delay={150}>
+                    <div className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-400 text-indigo-950 rounded-2xl p-6 border-2 border-yellow-100 shadow-2xl shadow-amber-400/50 relative overflow-hidden group hover:scale-[1.03] transition-all duration-300 cursor-pointer">
+                      {/* Light Beam Animation */}
+                      <div className="absolute -inset-x-full top-0 bottom-0 bg-gradient-to-r from-transparent via-white/50 to-transparent group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></div>
+                      
+                      <div className="font-black text-indigo-950 mb-2 flex items-center gap-2 text-base relative z-10">
+                        <Award className="w-6 h-6 text-indigo-950 animate-bounce" /> 
+                        <span className="text-lg font-black tracking-tight text-indigo-950">우수 수료생 특전</span>
+                        <span className="ml-auto text-[11px] bg-indigo-950 text-amber-300 font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md animate-pulse">
+                          SPECIAL BENEFIT
+                        </span>
+                      </div>
+                      <div className="text-sm text-indigo-950 font-extrabold leading-relaxed relative z-10 bg-white/45 backdrop-blur-xs p-3 rounded-xl border border-amber-600/30 shadow-inner">
+                        서류 전형 면제 · 인턴십 연계 · 그룹사 및 파트너사 채용 기회 우선 제공
+                      </div>
                     </div>
-                    <div className="text-sm text-amber-100 font-semibold leading-relaxed relative z-10">
-                      서류 전형 면제 · 인턴십 연계 · 그룹사 및 파트너사 채용 기회 우선 제공
-                    </div>
-                  </div>
+                  </ScrollReveal>
                 </div>
 
                 <div className="lg:w-2/3 grid sm:grid-cols-2 gap-4">
@@ -2233,43 +2615,25 @@ export default function App() {
             <div className="grid lg:grid-cols-2 gap-8">
               {/* Campus 1 */}
               <div className="rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <div className="h-64 bg-gray-200 relative flex items-center justify-center">
-                  <Building className="w-16 h-16 text-gray-400" />
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    <span className="bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded">TRACK 01 에이전트</span>
-                    <span className="bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded">TRACK 02 아키텍트</span>
-                  </div>
-                </div>
+                <GwacheonCarousel />
                 <div className="p-8">
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">과천 캠퍼스</h3>
                   <p className="text-gray-600 font-medium mb-4">과천 메가존클라우드 2층 교육장</p>
-                  <p className="text-sm text-gray-500 flex items-center gap-2 mb-6">
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
                     <MapPin className="w-4 h-4" /> 경기도 과천시 과천대로7길 74
                   </p>
-                  <a href="#" className="inline-block border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50">
-                    지도에서 보기
-                  </a>
                 </div>
               </div>
 
               {/* Campus 2 */}
               <div className="rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <div className="h-64 bg-gray-200 relative flex items-center justify-center">
-                  <Building className="w-16 h-16 text-gray-400" />
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">TRACK 03 보안</span>
-                    <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">TRACK 04 데이터</span>
-                  </div>
-                </div>
+                <YeoksamCarousel />
                 <div className="p-8">
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">역삼 캠퍼스</h3>
                   <p className="text-gray-600 font-medium mb-4">역삼 메가존클라우드 2층 교육장</p>
-                  <p className="text-sm text-gray-500 flex items-center gap-2 mb-6">
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
                     <MapPin className="w-4 h-4" /> 서울 강남구 논현로85길 46
                   </p>
-                  <a href="#" className="inline-block border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50">
-                    지도에서 보기
-                  </a>
                 </div>
               </div>
             </div>
@@ -2294,22 +2658,7 @@ export default function App() {
         {/* --- Consultation Application Form (Fast Inquiry) --- */}
         <ConsultationSection />
 
-        {/* --- Footer CTA Banner --- */}
-        <section className="bg-indigo-900 py-20 relative overflow-hidden">
-           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAzNHYtNGgydjRoMnY0aC0ydjRoLTJ2LTRoLTJ2LTRoMnoiIGZpbGw9IiM0ZjQ2ZTUiIGZpbGwtb3BhY2l0eT0iMC40Ii8+PC9nPjwvc3ZnPg==')] opacity-20"></div>
-           <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-             <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6">지금, AI 취업에 도전하세요</h2>
-             <p className="text-indigo-200 text-lg mb-10">과정별 20명 내외 — 신청서 접수 순으로 입과 평가가 진행됩니다.</p>
-             <div className="flex flex-col sm:flex-row justify-center gap-4">
-               <a href="#apply" className="px-8 py-4 bg-white text-indigo-900 rounded-xl font-bold text-lg hover:bg-gray-50 transition-colors shadow-lg">
-                 교육 신청하기
-               </a>
-               <a href="#brochure" className="px-8 py-4 bg-indigo-800 text-white rounded-xl border border-indigo-700 font-bold text-lg hover:bg-indigo-700 transition-colors">
-                 교육 프로그램 보기
-               </a>
-             </div>
-           </div>
-        </section>
+
       </main>
 
       {/* --- Footer --- */}
