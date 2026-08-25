@@ -1,0 +1,6 @@
+{
+  "name": "메가존클라우드 AI CAMPUS",
+  "description": "2026 메가존클라우드 AI-Native 부트캠프 1기 교육생 모집 웹페이지",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

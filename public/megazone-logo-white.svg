@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200" fill="none" width="100%" height="100%">
+  <!-- Megazone 3-Leaf Trinity Emblem -->
+  <g transform="translate(20, 10)" fill="#FFFFFF">
+    <!-- Top Leaf -->
+    <path d="M 85,10 C 95,35 125,65 160,75 C 135,115 95,125 85,175 C 75,125 35,115 10,75 C 45,65 75,35 85,10 Z" fill-opacity="0" />
+    
+    <!-- Outer interconnected triple-leaf knot with precision geometric curves -->
+    <path fill-rule="evenodd" clip-rule="evenodd" d="
+      M 85,0 
+      C 89.5,0 93.8,3.2 96.5,8.8 
+      C 109.5,35.2 136.2,55.8 167.5,62.2 
+      C 173.8,63.5 177.2,70.5 173.8,76.2 
+      C 158.2,101.8 133.5,120.2 104.2,129.5 
+      C 110.8,141.8 121.2,151.8 133.8,158.5 
+      C 139.8,161.8 140.8,169.5 136.2,174.2 
+      C 116.5,193.5 90.2,201.2 63.5,196.2 
+      C 57.5,195 54.5,188.5 57.2,183 
+      C 67.5,162 71.5,138 68,114 
+      C 55.5,107.2 45.2,97.2 38.5,84.8 
+      C 35.2,78.8 38.5,71.5 44.8,70.2 
+      C 72.5,64.2 95.5,45.2 107.2,20 
+      C 100.8,12.8 96.5,6.5 92.5,2.5 
+      C 90.2,0.8 87.5,0 85,0 Z
+      
+      M 85,38 
+      C 74.5,64.5 54.2,85.2 28,95.5 
+      C 48.5,106 69.2,126.5 79.5,152.8 
+      C 90,132.2 110.5,111.5 136.8,101.2 
+      C 116.2,90.8 95.5,70.2 85,38 Z
+    " fill="#FFFFFF"/>
+    
+    <!-- Inner interlaced loop accent -->
+    <path fill-rule="evenodd" clip-rule="evenodd" d="
+      M 85,24 
+      C 93,52 118,74 148,82 
+      C 124,116 98,132 85,166 
+      C 72,132 46,116 22,82 
+      C 52,74 77,52 85,24 Z 
+      M 85,58 
+      C 79,78 65,92 48,99 
+      C 65,106 79,120 85,140 
+      C 91,120 105,106 122,99 
+      C 105,92 91,78 85,58 Z
+    " fill="#FFFFFF"/>
+  </g>
+
+  <!-- Wordmark Group: MEGAZONE CLOUD & Tagline -->
+  <g transform="translate(230, 0)" fill="#FFFFFF">
+    <!-- MEGAZONE -->
+    <text x="0" y="68" font-family="'Montserrat', 'Pretendard', 'Apple SD Gothic Neo', -apple-system, sans-serif" font-size="64" font-weight="900" letter-spacing="2.5" fill="#FFFFFF">MEGAZONE</text>
+    
+    <!-- CLOUD -->
+    <text x="0" y="138" font-family="'Montserrat', 'Pretendard', 'Apple SD Gothic Neo', -apple-system, sans-serif" font-size="64" font-weight="900" letter-spacing="6" fill="#FFFFFF">CLOUD</text>
+    
+    <!-- Tagline: Transform • Tomorrow • Together -->
+    <text x="2" y="180" font-family="'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="700" letter-spacing="1.2" fill="#FFFFFF">Transform · Tomorrow · Together</text>
+  </g>
+</svg>
