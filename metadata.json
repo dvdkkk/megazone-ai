@@ -1,0 +1,8 @@
+{
+  "name": "메가존클라우드 AI-Native 부트캠프",
+  "description": "Imported from GitHub: dvdkkk/megazone-ai",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
