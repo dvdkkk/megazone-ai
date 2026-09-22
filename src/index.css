@@ -3027,40 +3027,33 @@ button, input, select {
   color: inherit;
 }
 
-/* PC/Desktop Environment: Disable link behavior & cursor */
-@media (min-width: 768px) {
-  a.apply-contact-item {
-    cursor: default;
-    pointer-events: none;
-  }
-  .footer-tel-link {
-    color: inherit;
-    text-decoration: none;
-    cursor: default;
-    pointer-events: none;
-  }
+/* Contact Item & Footer Tel Link (Clickable on PC & Mobile) */
+a.apply-contact-item {
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-/* Mobile Environment: Enable call link behavior & cursor */
-@media (max-width: 767px) {
-  a.apply-contact-item {
-    cursor: pointer;
-    pointer-events: auto;
-  }
-  a.apply-contact-item:active .apply-contact-value.phone-number {
-    opacity: 0.8;
-  }
-  .footer-tel-link {
-    color: inherit;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    font-weight: 700;
-    cursor: pointer;
-    pointer-events: auto;
-  }
-  .footer-tel-link:hover {
-    color: #00d2ff;
-  }
+a.apply-contact-item:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
+}
+
+a.apply-contact-item:active .apply-contact-value.phone-number {
+  opacity: 0.75;
+}
+
+.footer-tel-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: color 0.2s ease;
+}
+
+.footer-tel-link:hover {
+  color: #00d2ff;
 }
 
 .apply-icon-circle {
