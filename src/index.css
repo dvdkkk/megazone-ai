@@ -2960,24 +2960,33 @@ button, input, select {
 .apply-yellow-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 48px;
+  gap: 36px;
   align-items: center;
+}
+
+@media (min-width: 720px) {
+  .apply-yellow-layout {
+    grid-template-columns: 1fr 1.15fr;
+    gap: 36px;
+    align-items: center;
+  }
 }
 
 @media (min-width: 992px) {
   .apply-yellow-layout {
-    grid-template-columns: 1fr 1.15fr;
+    grid-template-columns: 1fr 1.18fr;
     gap: 60px;
   }
 }
 
-/* Left Content */
+/* Left Content (Second Selected Area) */
 .apply-yellow-left {
   color: #000000;
+  grid-column: 1;
 }
 
 .apply-yellow-title {
-  font-size: 42px;
+  font-size: clamp(28px, 3.2vw, 42px);
   font-weight: 900;
   color: #000000;
   line-height: 1.25;
@@ -3104,20 +3113,233 @@ button, input, select {
   letter-spacing: -0.02em;
 }
 
-/* Right Form Card */
+/* Right Form / Consultation Card (First Selected Area) */
 .apply-form-card {
   background: #ffffff;
   border-radius: 24px;
-  padding: 28px 32px;
+  padding: 32px 32px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
   color: #000000;
 }
 
+@media (min-width: 720px) {
+  .apply-form-card {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 840px) {
+  .apply-form-card {
+    padding: 24px 20px;
+  }
+}
+
 @media (max-width: 640px) {
   .apply-form-card {
-    padding: 20px 16px;
+    padding: 22px 18px;
     border-radius: 18px;
   }
+}
+
+/* Consultation CTA Card & Naver Form Button */
+.apply-consult-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.apply-consult-badge-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.apply-consult-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(3, 199, 90, 0.1);
+  color: #03a049;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(3, 199, 90, 0.25);
+  line-height: 1;
+}
+
+.apply-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #03c75a;
+  box-shadow: 0 0 0 0 rgba(3, 199, 90, 0.7);
+  animation: pulseNaverDot 1.8s infinite;
+}
+
+@keyframes pulseNaverDot {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(3, 199, 90, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(3, 199, 90, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(3, 199, 90, 0);
+  }
+}
+
+.apply-consult-title {
+  font-size: 26px;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .apply-consult-title {
+    font-size: 22px;
+  }
+}
+
+.apply-consult-title .purple-dot {
+  color: #5b50f6;
+  font-size: 14px;
+  margin-left: 6px;
+}
+
+.apply-consult-desc {
+  font-size: 14.5px;
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.apply-consult-checklist {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.apply-checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+.apply-check-icon {
+  color: #03c75a;
+  flex-shrink: 0;
+}
+
+.apply-naver-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: #0f172a;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  padding: 16px 22px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.2);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.apply-naver-btn:hover {
+  background: #03c75a;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(3, 199, 90, 0.35);
+  border-color: #03c75a;
+  color: #ffffff !important;
+}
+
+.apply-naver-btn:active {
+  transform: translateY(0);
+}
+
+.apply-naver-btn-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.apply-naver-logo-tag {
+  background: #03c75a;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 4px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+  transition: all 0.25s ease;
+}
+
+.apply-naver-btn:hover .apply-naver-logo-tag {
+  background: #ffffff;
+  color: #03c75a;
+}
+
+.apply-naver-btn-text {
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 640px) {
+  .apply-naver-btn-text {
+    font-size: 16px;
+  }
+}
+
+.apply-naver-btn-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, background 0.25s ease;
+  flex-shrink: 0;
+}
+
+.apply-naver-btn:hover .apply-naver-btn-icon {
+  transform: translate(2px, -2px);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.apply-consult-subnote {
+  font-size: 12.5px;
+  color: #64748b;
+  text-align: center;
+  margin-top: 14px;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.apply-consult-subnote strong {
+  color: #0f172a;
 }
 
 .apply-form-title {

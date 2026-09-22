@@ -427,17 +427,7 @@ export default function App() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const [partnerCertTab, setPartnerCertTab] = useState<'AWS' | 'MS' | 'GCP' | 'ISV'>('AWS');
 
-  // Form State
-  const [formData, setFormData] = useState({
-    name: '',
-    age: '',
-    phone: '',
-    track: '메가존 AI에이전트',
-    content: '',
-    agree: true
-  });
-  const [submittedMessage, setSubmittedMessage] = useState<string | null>(null);
-  const [showPrivacyDetails, setShowPrivacyDetails] = useState(false);
+  // Form / CTA States
 
   useEffect(() => {
     const handleScroll = () => {
@@ -473,50 +463,6 @@ export default function App() {
       observer.disconnect();
     };
   }, [selectedCourseId, partnerCertTab]);
-
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name || !formData.age || !formData.phone || !formData.track) {
-      alert('필수 항목(이름, 나이, 연락처, 과정명)을 모두 입력해주세요.');
-      return;
-    }
-
-    const currentData = { ...formData };
-
-    // 1. Optimistic UI: Immediately show completion message (0.1s feeling) without waiting for server response
-    setSubmittedMessage(
-      `상담 신청이 완료되었습니다!\n\n[${currentData.name}님 지원 신청 접수]\n희망 과정: ${currentData.track}\n연락처: ${currentData.phone}\n\n담당 전문 매니저가 1영업일 이내에 연락드려 국비지원 입과 상담을 도와드립니다.`
-    );
-
-    // Reset form inputs immediately
-    setFormData({
-      name: '',
-      age: '',
-      phone: '',
-      track: '메가존 AI에이전트',
-      content: '',
-      agree: true
-    });
-
-    // 2. Background transmission with keepalive: true to https://inputhaven.com/api/v1/submit
-    try {
-      const payload = new FormData();
-      payload.append('_form_id', '914168973e93bda60f4eac1e7cbe1449');
-      payload.append('name', currentData.name);
-      payload.append('age', currentData.age);
-      payload.append('phone', currentData.phone);
-      payload.append('course', currentData.track);
-      payload.append('message', currentData.content || '');
-
-      fetch('https://inputhaven.com/api/v1/submit', {
-        method: 'POST',
-        body: payload,
-        keepalive: true,
-      }).catch((err) => console.log('Background form submission dispatched:', err));
-    } catch (err) {
-      console.log('Background submission error:', err);
-    }
-  };
 
   const currentCourse = coursesData.find((c) => c.id === selectedCourseId) || coursesData[0];
 
@@ -565,7 +511,13 @@ export default function App() {
             </nav>
           </div>
           <div className="header-right">
-            <a href="#apply" className="btn-primary-pill" id="headerApplyBtn">
+            <a
+              href="https://naver.me/GVVI0Xbj"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary-pill"
+              id="headerApplyBtn"
+            >
               무료 상담 신청 ↗
             </a>
             <button
@@ -587,32 +539,14 @@ export default function App() {
           <a href="https://megazone-ai-04.vercel.app" onClick={() => setMobileMenuOpen(false)}>AI 데이터</a>
           <a href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
           <a
-            href="#apply"
+            href="https://naver.me/GVVI0Xbj"
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-primary-pill"
             style={{ textAlign: 'center', justifyContent: 'center' }}
-            onClick={(e) => {
-              e.preventDefault();
-              setMobileMenuOpen(false);
-              const target = document.getElementById('apply');
-              if (target) {
-                if (window.innerWidth < 768) {
-                  const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
-                  const offsetPosition = elementPosition + 320;
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                  });
-                } else {
-                  target.scrollIntoView({ behavior: 'smooth' });
-                }
-                setTimeout(() => {
-                  const nameInput = document.getElementById('userName');
-                  if (nameInput) nameInput.focus({ preventScroll: true });
-                }, 400);
-              }
-            }}
+            onClick={() => setMobileMenuOpen(false)}
           >
-            무료 상담 신청
+            무료 상담 신청 ↗
           </a>
         </div>
       </header>
@@ -649,29 +583,11 @@ export default function App() {
               과정 자세히 보기
             </a>
             <a
-              href="#apply"
+              href="https://naver.me/GVVI0Xbj"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-pill-gradient"
               id="heroApplyBtn"
-              onClick={(e) => {
-                e.preventDefault();
-                const target = document.getElementById('apply');
-                if (target) {
-                  if (window.innerWidth < 768) {
-                    const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
-                    const offsetPosition = elementPosition + 320;
-                    window.scrollTo({
-                      top: offsetPosition,
-                      behavior: 'smooth'
-                    });
-                  } else {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                  }
-                  setTimeout(() => {
-                    const nameInput = document.getElementById('userName');
-                    if (nameInput) nameInput.focus({ preventScroll: true });
-                  }, 400);
-                }
-              }}
             >
               무료 상담 신청하기 ➔
             </a>
@@ -989,7 +905,12 @@ export default function App() {
 
             {/* 액션 버튼 */}
             <div className="course-action-footer">
-              <a href="#apply" className="btn-primary-apply">
+              <a
+                href="https://naver.me/GVVI0Xbj"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary-apply"
+              >
                 교육 신청하기
               </a>
               <a
@@ -2191,199 +2112,61 @@ export default function App() {
               </p>
             </div>
 
-            {/* Right Form Card */}
-            <div className="apply-form-card reveal-item reveal-delay-2">
-              <h3 className="apply-form-title">
+            {/* Right Consultation CTA Card & Button */}
+            <div className="apply-form-card apply-consult-card reveal-item reveal-delay-2">
+              <div className="apply-consult-badge-row">
+                <span className="apply-consult-badge">
+                  <span className="apply-pulse-dot" />
+                  실시간 접수 중 · 공식 신청폼 접수
+                </span>
+              </div>
+
+              <h3 className="apply-consult-title">
                 빠른 교육상담 신청<span className="purple-dot">●</span>
               </h3>
-              <form
-                id="applyForm"
-                action="https://inputhaven.com/api/v1/submit"
-                method="POST"
-                onSubmit={handleFormSubmit}
+
+              <p className="apply-consult-desc">
+                국비지원 100% 무료 수강 자격부터 희망 과정 1:1 맞춤 상담까지!<br />
+                간단한 설문 작성으로 1분 만에 상담 신청이 완료됩니다.
+              </p>
+
+              <div className="apply-consult-checklist">
+                <div className="apply-checklist-item">
+                  <CheckCircle2 size={18} className="apply-check-icon" />
+                  <span>수강료 전액 국비지원 0원 (매월 훈련장려금 별도 지급)</span>
+                </div>
+                <div className="apply-checklist-item">
+                  <CheckCircle2 size={18} className="apply-check-icon" />
+                  <span>전공 무관 기초부터 실무 프로젝트까지 단계별 맞춤 케어</span>
+                </div>
+                <div className="apply-checklist-item">
+                  <CheckCircle2 size={18} className="apply-check-icon" />
+                  <span>메가존클라우드 인턴십 연계 및 우수 수료생 채용 우대</span>
+                </div>
+              </div>
+
+              {/* Main Consultation Application Button */}
+              <a
+                href="https://naver.me/GVVI0Xbj"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="apply-naver-btn"
+                id="naverApplyButton"
               >
-                <input type="hidden" name="_form_id" value="914168973e93bda60f4eac1e7cbe1449" />
-                {/* Row 1: Name & Age */}
-                <div className="apply-form-row-2">
-                  <div className="apply-form-group">
-                    <label htmlFor="userName">
-                      이름 <span className="req">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="userName"
-                      name="name"
-                      placeholder="홍길동"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    />
-                  </div>
-                  <div className="apply-form-group">
-                    <label htmlFor="userAge">
-                      나이 <span className="req">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="userAge"
-                      name="age"
-                      placeholder="예: 30"
-                      required
-                      value={formData.age}
-                      onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                    />
-                  </div>
+                <div className="apply-naver-btn-left">
+                  <span className="apply-naver-logo-tag">공식신청폼</span>
+                  <span className="apply-naver-btn-text">상담 신청하기</span>
                 </div>
-
-                {/* Row 2: Phone */}
-                <div className="apply-form-group">
-                  <label htmlFor="userPhone">
-                    연락처 <span className="req">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    id="userPhone"
-                    name="phone"
-                    placeholder="010-0000-0000"
-                    required
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  />
+                <div className="apply-naver-btn-icon">
+                  <ExternalLink size={20} />
                 </div>
+              </a>
 
-                {/* Row 3: Course selection */}
-                <div className="apply-form-group">
-                  <label>
-                    과정명 <span className="req">*</span>
-                  </label>
-                  <div className="course-pills-grid">
-                    {[
-                      '메가존 AI에이전트',
-                      '메가존 AI아키텍트',
-                      '메가존 AI보안',
-                      '메가존 AI데이터'
-                    ].map((courseName) => {
-                      const isSelected = formData.track === courseName;
-                      return (
-                        <label
-                          key={courseName}
-                          className={`course-pill-item ${isSelected ? 'selected' : ''}`}
-                        >
-                          <input
-                            type="radio"
-                            name="course"
-                            value={courseName}
-                            checked={isSelected}
-                            onChange={() => setFormData({ ...formData, track: courseName })}
-                          />
-                          <span className="radio-circle"></span>
-                          <span className="course-name">{courseName}</span>
-                        </label>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Row 4: Inquiries (Optional) */}
-                <div className="apply-form-group">
-                  <label htmlFor="userContent">
-                    문의내용 <span className="opt">(선택)</span>
-                  </label>
-                  <textarea
-                    id="userContent"
-                    name="message"
-                    placeholder="궁금하신 점을 자유롭게 적어주세요."
-                    rows={2}
-                    value={formData.content}
-                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  />
-                </div>
-
-                {/* Row 5: Agreement */}
-                <div className="apply-agree-row">
-                  <label className="apply-agree-checkbox">
-                    <input
-                      type="checkbox"
-                      required
-                      checked={formData.agree}
-                      onChange={(e) => setFormData({ ...formData, agree: e.target.checked })}
-                    />
-                    <span className="agree-text">개인정보 수집 및 이용에 동의합니다.</span>
-                  </label>
-                  <button
-                    type="button"
-                    className="privacy-detail-btn"
-                    onClick={() => setShowPrivacyDetails(!showPrivacyDetails)}
-                  >
-                    <span>{showPrivacyDetails ? '접기' : '자세히보기'}</span>
-                    {showPrivacyDetails ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                  </button>
-                </div>
-
-                {/* Privacy Policy Scrollable Container */}
-                {showPrivacyDetails && (
-                  <div className="privacy-details-scrollbox">
-                    <p className="privacy-details-title">[개인정보 수집·이용 동의] (필수)</p>
-                    <div className="privacy-details-section">
-                      <strong>1. 개인정보의 수집·이용 목적</strong>
-                      <p>교육 과정 신청 접수 및 본인 확인</p>
-                      <p>선발 전형 진행(서류 심사) 및 안내</p>
-                      <p>과정 개강, 설명회 등 관련 정보 안내 (문자, 이메일)</p>
-                    </div>
-                    <div className="privacy-details-section">
-                      <strong>2. 수집하는 개인정보 항목</strong>
-                      <p>• 필수 항목: 이름, 연락처(휴대폰 번호), 과정명</p>
-                    </div>
-                    <div className="privacy-details-section">
-                      <strong>3. 개인정보의 보유 및 이용 기간</strong>
-                      <p>수집 목적 달성 및 전형 종료 후 즉시 파기</p>
-                      <p>단, 최종 선발자의 경우 교육 종료 및 사후 관리 기간까지 보유 및 이용합니다.</p>
-                    </div>
-                    <div className="privacy-details-section">
-                      <strong>4. 개인정보 수집 거부에 관한 사항</strong>
-                      <p>귀하께서는 본 안내에 따른 개인정보 수집, 이용에 대하여 동의를 거부하실 권리가 있습니다.</p>
-                      <p>단, 이용자가 개인정보 수집 동의 거부를 하였을 경우에는 교육 신청이 불가합니다.</p>
-                    </div>
-                  </div>
-                )}
-
-                {/* Row 6: Submit Button */}
-                <button type="submit" className="apply-black-submit-btn" id="submitApplyForm">
-                  <span>무료상담 신청하기</span>
-                  <Send size={18} style={{ transform: 'rotate(-20deg)', marginLeft: '2px' }} />
-                </button>
-
-                {/* Row 7: Reassurance Note */}
-                <p className="apply-form-footer-note">
-                  개인정보는 상담 목적으로만 사용되며 안전하게 보호됩니다.
-                </p>
-              </form>
+              
             </div>
           </div>
         </div>
       </section>
-
-      {/* Confirmation Modal */}
-      {submittedMessage && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="bg-[#111a2e] border border-white/20 p-6 md:p-8 rounded-2xl max-w-md w-full shadow-2xl text-center">
-            <div className="w-16 h-16 bg-blue-500/20 text-[#00d2ff] rounded-full flex items-center justify-center mx-auto mb-4 border border-[#00d2ff]/40">
-              <CheckCircle2 size={36} />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-2">상담 신청이 접수되었습니다!</h3>
-            <p className="text-sm text-slate-300 whitespace-pre-line leading-relaxed mb-6">
-              {submittedMessage}
-            </p>
-            <button
-              type="button"
-              className="btn-pill-gradient w-full py-3 font-bold"
-              onClick={() => setSubmittedMessage(null)}
-            >
-              확인
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* Footer */}
       <footer className="footer">
@@ -2400,29 +2183,11 @@ export default function App() {
 
       {/* Circular Floating Consultation FAB Button (PC & Mobile) */}
       <a
-        href="#apply"
+        href="https://naver.me/GVVI0Xbj"
+        target="_blank"
+        rel="noopener noreferrer"
         className="floating-consult-fab"
-        title="빠른 상담신청"
-        onClick={(e) => {
-          e.preventDefault();
-          const target = document.getElementById('apply');
-          if (target) {
-            if (window.innerWidth < 768) {
-              const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
-              const offsetPosition = elementPosition + 320;
-              window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-              });
-            } else {
-              target.scrollIntoView({ behavior: 'smooth' });
-            }
-            setTimeout(() => {
-              const nameInput = document.getElementById('userName');
-              if (nameInput) nameInput.focus({ preventScroll: true });
-            }, 400);
-          }
-        }}
+        title="빠른 상담신청 (새 창)"
       >
         <span className="fab-ping-ring"></span>
         <span className="fab-ping-ring-outer"></span>
